@@ -1,0 +1,11 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "botania:block/shapes/creative_mana_pool_full",
+	"textures": {
+		"bottom": "botania:block/pool/creative_pool_bottom",
+		"inside": "botania:block/pool/creative_pool_inside",
+		"mana": "botania:block/mana_water",
+		"side": "botania:block/pool/creative_pool_side",
+		"top": "botania:block/pool/creative_pool_top"
+	}
+}

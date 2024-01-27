@@ -1,0 +1,23 @@
+{
+  "oreConfig": [
+    {
+      "ore": "thermal:sapphire_ore",
+      "fillers": [
+        "STONE_ORE_REPLACEABLES"
+      ],
+      "distribution": "TRIANGLE",
+      "minY": -32,
+      "maxY": 90,
+      "maxVeinSize": 6,
+      "spawnRate": 5.0,
+      "discardChanceOnAirExposure": 0.0,
+      "biomeFilters": {
+        "biomeBlacklist": [],
+        "biomeWhitelist": [
+          "OVERWORLD"
+        ]
+      },
+      "replace": true
+    }
+  ]
+}

@@ -15,7 +15,7 @@
 		#small tin vein Generation Settings.
 		[world_generation.tin.small]
 			#Determines if small tin veins should be added to world generation. Note: Requires generating tin ore to be enabled.
-			shouldGenerate = true
+			shouldGenerate = false
 			#Chance that small tin veins generates in a chunk.
 			#Range: 1 ~ 256
 			perChunk = 14
@@ -56,7 +56,7 @@
 		#large tin vein Generation Settings.
 		[world_generation.tin.large]
 			#Determines if large tin veins should be added to world generation. Note: Requires generating tin ore to be enabled.
-			shouldGenerate = true
+			shouldGenerate = false
 			#Chance that large tin veins generates in a chunk.
 			#Range: 1 ~ 256
 			perChunk = 12
@@ -102,7 +102,7 @@
 		#upper osmium vein Generation Settings.
 		[world_generation.osmium.upper]
 			#Determines if upper osmium veins should be added to world generation. Note: Requires generating osmium ore to be enabled.
-			shouldGenerate = true
+			shouldGenerate = false
 			#Chance that upper osmium veins generates in a chunk.
 			#Range: 1 ~ 256
 			perChunk = 65
@@ -143,7 +143,7 @@
 		#middle osmium vein Generation Settings.
 		[world_generation.osmium.middle]
 			#Determines if middle osmium veins should be added to world generation. Note: Requires generating osmium ore to be enabled.
-			shouldGenerate = true
+			shouldGenerate = false
 			#Chance that middle osmium veins generates in a chunk.
 			#Range: 1 ~ 256
 			perChunk = 6
@@ -184,7 +184,7 @@
 		#small osmium vein Generation Settings.
 		[world_generation.osmium.small]
 			#Determines if small osmium veins should be added to world generation. Note: Requires generating osmium ore to be enabled.
-			shouldGenerate = true
+			shouldGenerate = false
 			#Chance that small osmium veins generates in a chunk.
 			#Range: 1 ~ 256
 			perChunk = 8

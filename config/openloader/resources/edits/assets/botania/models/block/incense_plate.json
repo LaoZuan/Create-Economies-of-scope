@@ -1,0 +1,36 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"all": "botania:model/incenseplate",
+		"particle": "botania:block/livingwood_log"
+	},
+	"elements": [
+		{
+			"name": "Plate",
+			"from": [2, 0, 6],
+			"to": [14, 1, 10],
+			"faces": {
+				"north": {"uv": [2, 15, 14, 16], "texture": "#all"},
+				"east": {"uv": [6, 15, 10, 16], "texture": "#all"},
+				"south": {"uv": [2, 15, 14, 16], "texture": "#all"},
+				"west": {"uv": [6, 15, 10, 16], "texture": "#all"},
+				"up": {"uv": [2, 6, 14, 10], "texture": "#all"},
+				"down": {"uv": [2, 6, 14, 10], "texture": "#all", "cullface": "down"}
+			}
+		},
+		{
+			"name": "High",
+			"from": [2, 1, 6],
+			"to": [5, 2, 10],
+			"faces": {
+				"north": {"uv": [11, 14, 14, 15], "texture": "#all"},
+				"east": {"uv": [6, 14, 10, 15], "texture": "#all"},
+				"south": {"uv": [2, 14, 5, 15], "texture": "#all"},
+				"west": {"uv": [6, 14, 10, 15], "texture": "#all"},
+				"up": {"uv": [2, 6, 5, 10], "texture": "#all"},
+				"down": {"uv": [2, 6, 5, 10], "texture": "#all"}
+			}
+		}
+	]
+}

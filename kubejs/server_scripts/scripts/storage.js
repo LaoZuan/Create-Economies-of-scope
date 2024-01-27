@@ -42,10 +42,10 @@ function drawersop(event) {
 		drawer_sizes.forEach(size => {
 			let full = SD(`${e}_full_drawers_${size}`)
 			let half = SD(`${e}_half_drawers_${size}`)
-			let functionalstorage = (`functionalstorage:${e}_${size}`)
+			//let functionalstorage = (`functionalstorage:${e}_${size}`)
 			event.remove({ id: full })
 			event.remove({ id: half })
-			event.remove({ output: functionalstorage })
+			//event.remove({ output: functionalstorage })
 			event.stonecutting(full, trim)
 			event.stonecutting(Item.of(half, 2), trim)
 			//event.stonecutting(functionalstorage, trim)

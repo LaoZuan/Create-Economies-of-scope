@@ -8,6 +8,11 @@ onEvent('recipes', event => {
 	tweaks(event)
 	//avaritia(event)
 
+    //c1
+	twilightforest(event)
+    //c2
+	bloodmagic(event)
+
 	pneumaticcraft(event)//气动工艺
 	immersiveengineering(event)//沉浸工程
 
@@ -62,30 +67,12 @@ function unwantedRecipes(event) {  //不想要的配方
 	event.remove({ output: '#forge:coins' }) //禁用钱币制作
 	//event.remove({ input: '#forge:coins' })
 	event.remove({ id: CR('cutting/andesite_alloy') })
-	event.remove({ mod: ('extendedgears') })
-	event.remove({ id: ('alloyed/mixing/steel_ingot') })
 	event.remove({ id: ('create:botanist/elven_trade/andesite_casing') })
 	event.remove({ id: ('create:botanist/elven_trade/copper_casing') })
 	event.remove({ id: ('create:botanist/elven_trade/brass_casing') })
 	event.remove({ id: TE("machines/pyrolyzer/pyrolyzer_coal") })
 	event.remove({ id: TE("machines/pyrolyzer/pyrolyzer_logs") })
 	event.remove({ id: TE('storage/carrot_block') })
-	event.remove({ id: TE('fire_charge/invar_ingot_3') })
-	event.remove({ id: TE('fire_charge/enderium_ingot_2') })
-	event.remove({ id: TE('fire_charge/constantan_ingot_2') })
-	event.remove({ id: TE('fire_charge/bronze_ingot_4') })
-	event.remove({ id: TE('fire_charge/electrum_ingot_2') })
-	event.remove({ id: TE('fire_charge/lumium_ingot_4') })
-	event.remove({ id: TE('fire_charge/signalum_ingot_4') })
-	event.remove({ id: TE('machine/pulverizer/pulverizer_cinnabar') })
-	event.remove({ id: TE('machine/smelter/smelter_alloy_signalum') })
-	event.remove({ id: TE('machine/smelter/smelter_alloy_lumium') })
-	event.remove({ id: TE('machine/smelter/smelter_alloy_electrum') })
-	event.remove({ id: TE('machine/smelter/smelter_alloy_enderium') })
-	event.remove({ id: TE('machine/smelter/smelter_alloy_invar') })
-	event.remove({ id: TE('machine/smelter/smelter_alloy_constantan') })
-	event.remove({ id: TE('machine/smelter/smelter_alloy_bronze') })
-	event.remove({ id: TE('compat/tconstruct/smelter_alloy_tconstruct_rose_gold_ingot') })
 	event.remove({ id: TE('machine/pulverizer/pulverizer_ender_pearl') })
 	event.remove({ id: TE('storage/electrum_block') })
 	event.remove({ id: TE('storage/electrum_nugget_from_ingot') })
@@ -96,17 +83,7 @@ function unwantedRecipes(event) {  //不想要的配方
 	event.remove({ id: PC('explosion_crafting/wheat_flour') })
 	event.remove({ id: 'explosion_crafting/wheat_flour' })
 	event.remove({ id: FA("eternal_stella") })
-	event.remove({ output: 'tinkers_thinking:fried_egg' })
-	event.remove({ id: TC("smeltery/melting/metal/electrum/coin") })
-	event.remove({ id: TC("smeltery/melting/metal/lead/coin") })
-	event.remove({ id: TC("smeltery/melting/metal/copper/coin") })
-	event.remove({ id: TC("smeltery/melting/metal/netherite/coin") })
-	event.remove({ id: TC("smeltery/melting/metal/tin/coin") })
-	event.remove({ id: TC("smeltery/melting/metal/lumium/coin") })
-	event.remove({ id: TC("smeltery/melting/metal/bronze/coin") })
-	event.remove({ id: TC("smeltery/melting/metal/nickel/coin") })
-	event.remove({ id: TC("smeltery/melting/metal/constantan/coin") })
-	event.remove({ id: TC("smeltery/melting/metal/enderium/coin") })
+	//event.remove({ output: 'tinkers_thinking:fried_egg' })
     event.remove({ id: /thermal:fuels\/numismatic.*/ })
 	event.remove({ output: 'createindustry:heavy_plate' })
 	event.remove({ id: "create:crushing/diamond/scarp_diamond" })
@@ -115,12 +92,161 @@ function unwantedRecipes(event) {  //不想要的配方
     event.remove({ id: /beyond_earth_giselle_addon:compat\/mekanism\/pigment_extracting.*/ })
 	event.remove({ output: 'create_dd:chromatic_compound' })
 	event.remove({ id: "createaddition:compat/immersiveengineering/item_application/kiln_brick" })
-	event.remove({ id: CR('item_application/copper_casing_from_wood') })//铜机壳
-    event.remove({ id: CR('item_application/copper_casing_from_log') })
-    event.remove({ id: CR('item_application/andesite_casing_from_wood') })//安山机壳
-    event.remove({ id: CR('item_application/andesite_casing_from_log') })
-	event.remove({ mod: ('creatania') })
+	//event.remove({ mod: ('creatania') })
 	event.remove({ output: 'twilightforest:uncrafting_table' })
+
+    event.remove({ mod: ('avaritia') })
+
+}
+
+////c1
+
+function twilightforest(event) {
+//渡鸦羽毛
+event.recipes.botania.mana_infusion(TF('raven_feather'), MC('feather'), 1000)
+
+//魔法地图核心
+event.shapeless(TF('magic_map_focus'), [
+	TF('raven_feather'), 
+	TF('torchberries'), 
+	MC('glow_berries')
+])
+
+event.remove({ id: PC("cannon_barrel") })
+event.shaped(PC("cannon_barrel"), [
+	'A A',
+	'A A',
+	'ASA',
+], {
+	A: ['kubejs:iron_compressed_sheet', 'create_dd:industrial_iron_sheet'],
+	S: 'pneumaticcraft:pressure_tube'
+})
+
+}
+
+////c2
+function bloodmagic(event) {
+event.remove({ id: BM('blood_altar')})//血之祭坛
+event.custom({
+  "type": "ars_nouveau:enchanting_apparatus",
+  "reagent": [
+    {
+      "item": "create:depot"
+    }
+  ],
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "kubejs:infernal_mechanism"
+      }
+    },
+    {
+      "item": {
+        "item": "tconstruct:bloodbone"
+      }
+    },
+	{
+      "item": {
+        "item": "kubejs:infernal_mechanism"
+      }
+    },
+	{
+      "item": {
+        "item": "tconstruct:bloodbone"
+      }
+    },
+	{
+      "item": {
+        "item": "kubejs:infernal_mechanism"
+      }
+    },
+	{
+      "item": {
+        "item": "tconstruct:bloodbone"
+      }
+    },
+	{
+      "item": {
+        "item": "kubejs:infernal_mechanism"
+      }
+    },
+	{
+      "item": {
+        "item": "tconstruct:bloodbone"
+      }
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:altar"
+  },
+  "sourceCost": 5000,
+  "keepNbtOfReagent": false
+})
+
+//气血宝珠
+event.remove({ id: BM('altar/weakbloodorb') })
+event.recipes.bloodmagic.altar(BM('weakbloodorb'), BO('mana_pearl')).upgradeLevel(0).altarSyphon(2000).consumptionRate(5).drainRate(1)
+event.remove({ id: BM('altar/apprenticebloodorb') })
+event.recipes.bloodmagic.altar(BM('apprenticebloodorb'), BO('mana_diamond')).upgradeLevel(1).altarSyphon(5000).consumptionRate(5).drainRate(5)
+event.remove({ id: BM('altar/magicianbloodorb') })
+event.recipes.bloodmagic.altar(BM('magicianbloodorb'), 'bloodsmeltery:bloodbrass_block').upgradeLevel(2).altarSyphon(25000).consumptionRate(20).drainRate(20)
+
+//血气黄铜	
+event.replaceInput({ id: 'bloodsmeltery:altar/bloodbrass' }, MC('copper_ingot'), CR('brass_ingot'))
+
+event.remove({ id: BM('alchemy_table') })//炼金术桌
+event.recipes.bloodmagic.altar(BM('alchemytable'), ARS('scribes_table')).upgradeLevel(0).altarSyphon(2500).consumptionRate(5).drainRate(5)
+
+//熔岩晶体
+event.replaceInput({ id: BM('lava_crystal') }, MC('diamond'), FA('stellarite_piece'))
+
+////生命源质
+//灌注
+event.custom({
+  "type": "ars_nouveau:imbuement",
+  "input": {
+    "item": "tconstruct:blood_bucket"
+  },
+  "output": "bloodmagic:life_essence_bucket",
+  "count": 1,
+  "source": 8000,
+  "pedestalItems": []
+})
+event.custom({
+  "type": "ars_nouveau:imbuement",
+  "input": {
+    "item": "biomesoplenty:blood_bucket"
+  },
+  "output": "bloodmagic:life_essence_bucket",
+  "count": 1,
+  "source": 8000,
+  "pedestalItems": []
+})
+//恶魔意志搅拌
+event.custom({
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "fluidTag": "forge:demon_will",
+      "amount": 5
+    },
+	{
+      "fluidTag": "forge:blood",
+      "amount": 1
+    }
+  ],
+  "results": [
+    {
+      "fluid": "bloodmagic:life_essence_fluid",
+      "amount": 1
+    }
+  ]
+})
+/*
+let willname = ['default', 'corrosive', 'destructive', 'vengeful', 'steadfast']
+event.recipes.createMixing([Fluid.of('bloodmagic:life_essence_fluid', 1)], [Fluid.of("bloodsmeltery:" + willname + "_will", 10), Fluid.of(TC('blood'), 1)]).processingTime(1)
+event.recipes.createMixing([Fluid.of('bloodmagic:life_essence_fluid', 1)], [Fluid.of("bloodsmeltery:" + willname + "_will", 10), Fluid.of(BOP('blood'), 1)]).processingTime(1)
+*/
 }
 
 function pneumaticcraft(event) {
@@ -131,27 +257,15 @@ event.remove({ id: 'compressedcreativity:item_application/compressed_iron_casing
 event.remove({ id: 'compressedcreativity:item_application/compressed_iron_casing_from_log' })
 event.replaceInput({ id: PC("reinforced_chest") }, MC('gold_nugget'), CR('brass_nugget'))
 
-//刨花板
-event.custom({
-	"type": "create:mixing",
-	"ingredients": [
-	  {
-		"item": "createindustry:sawdust_block"
-	  },
-	  {
-		"fluidTag": "tconstruct:tooltips/slime",
-		"amount": 50
-	  }
-	],
-	"results": [
-	  {
-		"item": "createindustry:chipwood"
-	  }
-	]
-})
-
 //岩浆膏
 event.replaceInput({ id: "create_sa:magma_cream_recipe" }, 'minecraft:slime_ball', '#forge:slimeballs')
+
+//塑料块
+event.recipes.createMechanicalCrafting(PC("plastic_brick_white"), [
+	'S'
+], {
+	S: PC('plastic')
+})
 
 //炮管
 event.remove({ id: PC("cannon_barrel") })
@@ -160,7 +274,7 @@ event.shaped(PC("cannon_barrel"), [
 	'A A',
 	'ASA',
 ], {
-	A: ['kubejs:iron_compressed_sheet', 'create_dd:industrial_iron_sheet'],
+	A: 'kubejs:iron_compressed_sheet',
 	S: 'pneumaticcraft:pressure_tube'
 })
 
@@ -179,23 +293,12 @@ event.shaped(PC("charging_station"), [
 //初级
 event.remove({ id: PC("pressure_tube") })
 event.shaped(PC('pressure_tube', 8), [
-	' B ',
 	'SCS',
-	' B ',
 ], {
-	B: ['thermal:cured_rubber', 'kubejs:treated_kelp'],
-	C: PC('compressed_iron_gear'),
-	S: 'create_dd:industrial_iron_sheet'
-})
-event.shaped(PC('pressure_tube', 16), [
-	' B ',
-	'SCS',
-	' B ',
-], {
-	B: ['thermal:cured_rubber', 'kubejs:treated_kelp'],
 	C: PC('compressed_iron_gear'),
 	S: KJ('iron_compressed_sheet')
 })
+event.stonecutting(PC("pressure_tube", 4), "create:sturdy_sheet")
 //压力表管道模块
 event.remove({ id: PC("pressure_gauge_module") })
 event.shapeless(PC("pressure_gauge_module"), [PC('pressure_tube'), PC('pressure_gauge')])
@@ -295,6 +398,7 @@ donutCraft(event, PC('heat_pipe', 8), PC('compressed_iron_block'), TE("#rockwool
 
 //轮机扇叶
 event.remove({ id: 'pneumaticcraft:pressure_chamber/turbine_blade' })
+/*
 //密封合成
 event.custom({
 	"type": "createdieselgenerators:basin_fermenting",
@@ -319,6 +423,7 @@ event.custom({
 	"processingTime": 250,
 	"heatRequirement": "heated"
 })
+*/
 //压力室
 event.custom({
 	"type": "pneumaticcraft:pressure_chamber",
@@ -401,9 +506,9 @@ event.shapeless(PC("bandage"), [PC('glycerol'), '#mekanism:colorable/carpets', '
 //气缸
 event.remove({ id: PC("pneumatic_cylinder") })
 event.shaped('2x pneumaticcraft:pneumatic_cylinder', [
-	'ASA',
-	'ABA',
-	'ABA',
+	'S',
+	'B',
+	'A',
 ], {
 	A: 'create_dd:lapis_alloy',
 	S: 'pneumaticcraft:pressure_tube',
@@ -1073,174 +1178,51 @@ event.recipes.thermal.smelter(MEK("structural_glass", 6), [F("#gems/quartz"), CR
 
 function magic(event) {
 
-//bloodmagic
+//刷怪笼碎片
+event.recipes.createMilling([FA('spawner_scrap', 1)], 'pneumaticcraft:empty_spawner').processingTime(700)
+event.recipes.createCrushing([FA('spawner_scrap', 1), Item.of(FA("spawner_scrap"), 1).withChance(0.75)], 'pneumaticcraft:empty_spawner').processingTime(500)
 
-event.replaceInput({ id: 'bloodsmeltery:altar/bloodbrass' }, MC('copper_ingot'), CR('brass_ingot'))//血气黄铜
+//活根
+event.recipes.botania.mana_infusion(BO("living_root"), F('#rods/wooden'), 100)
 
-event.remove({ id: BM('blood_altar')})//血之祭坛
-event.recipes.botania.runic_altar(BM('altar'), [CR('depot'), TC('bloodbone'), TC('bloodbone'), TC('bloodbone'), TC('bloodbone'), FA('corrupti_dust')], 5000)
+////异界石板
+event.remove({ id: OC('crafting/otherstone_tablet') })
+event.shaped(OC('otherstone_tablet', 3), [
+	'AAA',
+	'PPP'
+], {
+	P: OC('burnt_otherstone'),
+	A: 'tconstruct:amethyst_bronze_nugget'
+})	
+event.shaped(OC('otherstone_tablet', 3), [
+	'AAA',
+	'PPP'
+], {
+	A: OC('burnt_otherstone'),
+	P: 'tconstruct:amethyst_bronze_nugget'
+})
 
-event.remove({ id: BM('alchemy_table') })//炼金术桌
-event.recipes.bloodmagic.altar(BM('alchemytable'), ARS('scribes_table')).upgradeLevel(0).altarSyphon(2500).consumptionRate(5).drainRate(5)
+let ot0 = 'occultism:burnt_otherstone'//异界石板装配
+event.recipes.createSequencedAssembly([
+	'3x occultism:otherstone_tablet',
+], 'occultism:burnt_otherstone', [
+	event.recipes.createDeploying(ot0, [ot0, 'tconstruct:amethyst_bronze_nugget']),
+	event.recipes.createPressing(ot0, [ot0]),
+]).transitionalItem(ot0)
+	.loops(3)
+	.id('occultism:otherstone_tablet')
 
-//生命源质
-event.recipes.createMixing([Fluid.of('bloodmagic:life_essence_fluid', 1)], [Fluid.of('creatania:real_mana', 10), Fluid.of(TC('blood'), 1)]).processingTime(1)
-event.recipes.createMixing([Fluid.of('bloodmagic:life_essence_fluid', 1)], [Fluid.of('creatania:real_mana', 10), Fluid.of(BOP('blood'), 1)]).processingTime(1)
+let ot1 = 'occultism:otherstone_slab'//异界石板更简便的装配
+event.recipes.createSequencedAssembly([
+	'3x occultism:otherstone_tablet',
+], 'occultism:burnt_otherstone', [
+	event.recipes.createFilling(ot1, [ot1, Fluid.of(TC('molten_amethyst_bronze'), 30)]),
+	event.recipes.createPressing(ot1, [ot1]),
+]).transitionalItem(ot1)
+	.loops(1)
+	.id('occultism:otherstone_tablet_1')
 
 /*
-let willname = ['default', 'corrosive', 'destructive', 'vengeful', 'steadfast']
-event.recipes.createMixing([Fluid.of('bloodmagic:life_essence_fluid', 1)], [Fluid.of("bloodsmeltery:" + willname + "_will", 10), Fluid.of(TC('blood'), 1)]).processingTime(1)
-event.recipes.createMixing([Fluid.of('bloodmagic:life_essence_fluid', 1)], [Fluid.of("bloodsmeltery:" + willname + "_will", 10), Fluid.of(BOP('blood'), 1)]).processingTime(1)
-*/
-
-//arsnouveau
-
-event.remove({ id: ARS('novice_spell_book') })//初学者法术书
-event.shapeless(ARS("novice_spell_book"), [MC('writable_book'), FA('arcane_gold_ingot'), FA('rune'), MC('iron_sword'), MC('iron_pickaxe'), MC('iron_axe'), MC('iron_shovel')])
-event.remove({ id: ARS('apprentice_spell_book_upgrade') })//法师法术书
-event.recipes.botania.runic_altar(ARS('apprentice_spell_book'), [ARS('novice_spell_book'), FA('arcane_gold_block'), BO('pixie_dust'), BO('pixie_dust'), RQ('witch_hat')], 12000)
-event.remove({ id: ARS('archmage_spell_book_upgrade') })//大法师法术书
-event.recipes.botania.runic_altar(ARS("archmage_spell_book"), [ARS('apprentice_spell_book'), ARS('wilden_tribute'), FA('dark_nether_star'), BO('life_essence'), FA('stellarite_piece'), BM('arcaneashes'), BM('arcaneashes')], 24000)
-
-
-//魔源浆果派
-event.remove({ id: ARS('source_berry_pie') })
-event.shaped(ARS('source_berry_pie'), [
-	'DAD',
-	'PPP',
-	'BCB'
-], {
-	P: ARS('source_berry'),
-	A: ARS('magebloom'),
-	D: F('#milk'),
-	B: MC('sugar'),
-	C: FD('pie_crust')
-})	
-let source_berry_pie = FD('pie_crust')
-event.recipes.createSequencedAssembly([
-	ARS('source_berry_pie'),
-], FD('pie_crust'), [
-	event.recipes.createDeploying(source_berry_pie, [source_berry_pie, ARS('source_berry')]),
-	event.recipes.createDeploying(source_berry_pie, [source_berry_pie, ARS('source_berry')]),
-	event.recipes.createDeploying(source_berry_pie, [source_berry_pie, ARS('magebloom')]),
-	event.recipes.createDeploying(source_berry_pie, [source_berry_pie, MC('sugar')]),
-]).transitionalItem(source_berry_pie)
-	.loops(1)
-	.id('kubejs:source_berry_pie')
-
-
-//奥术石
-event.remove({ id: ARS('arcane_stone') })
-event.shaped(ARS('arcane_stone', 8), [
-		'PA',
-		'AP'
-	], {
-		P: 'hexcasting:charged_amethyst',
-		A: KJ('metamorphic_alloy')
-	})	
-
-event.shaped(ARS('arcane_stone', 12), [
-		'PA',
-		'AP'
-	], {
-		P: ARS('source_gem'),
-		A: KJ('metamorphic_alloy')
-	})	
-
-	/*event.shaped(ARS('arcane_stone', 16), [
-		'AP',
-		'PP'
-	], {
-		P: BO('livingrock'),
-		A: BM('arcaneashes')
-	})*/
-
-event.remove({ id: ARS('scribes_table') })//抄写台
-event.shaped(ARS('scribes_table', 1), [
-		'AAA',
-		'BPC'
-	], {
-		P: KJ('mysterious_casing'),
-		B: CR('schematic_table'),
-		C: TC('tinkers_chest'),
-		A: MC('smooth_stone_slab')
-	})	
-
-//魔源灌注器	
-event.remove({ id: ARS('imbuement_chamber') })
-event.shaped(ARS('imbuement_chamber', 1), [
-		' C ',
-		'CBC',
-		' C '
-	], {
-		B: KJ('mysterious_casing'),
-		C: FA('arcane_gold_ingot'),
-	})
-
- //奥术核心
-event.remove({ id: ARS('arcane_core') })
-event.shaped(ARS('arcane_core', 1), [
-		'AAA',
-		'PBP',
-		'AAA'
-	], {
-		P: 'moreminecarts:hard_light_lens',
-		B: KJ('mysterious_casing'),
-		A: ARS('arcane_stone')
-	})	
-let arcane_core = (id, amount, other_ingredient) => {
-		event.remove({ output: id })
-		if (other_ingredient) {
-			event.smithing(Item.of(id, amount), 'ars_nouveau:arcane_core', other_ingredient)
-			event.recipes.createMechanicalCrafting(Item.of(id, amount), "AB", { A: 'ars_nouveau:arcane_core', B: other_ingredient })
-		}
-		else
-			event.stonecutting(Item.of(id, amount), 'ars_nouveau:arcane_core')
-	}
-
-arcane_core('ars_nouveau:arcane_pedestal', 2)
-arcane_core('ars_nouveau:agronomic_sourcelink', 1, F('#hoes'))
-arcane_core('ars_nouveau:source_jar', 1, CR('fluid_tank'))
-arcane_core('ars_nouveau:enchanting_apparatus', 1, 'create_enchantment_industry:enchanting_guide')
-arcane_core('ars_nouveau:relay', 1, ARS('source_gem_block'))
-arcane_core('ars_nouveau:volcanic_sourcelink', 1, MC('lava_bucket'))
-arcane_core('ars_nouveau:basic_spell_turret', 1, MC('dispenser'))
-arcane_core('ars_nouveau:alchemical_sourcelink', 1, MC('brewing_stand'))
-arcane_core('ars_nouveau:vitalic_sourcelink', 1, BM('soulsnare'))
-arcane_core('ars_nouveau:mycelial_sourcelink', 1, FA('fungyss_hyphae'))
-
-	//活根
-	event.recipes.botania.mana_infusion(BO("living_root"), F('#rods/wooden'), 100)
-
-	event.remove({ id: OC('crafting/otherstone_tablet') })//异界石板
-	event.shaped(OC('otherstone_tablet', 3), [
-		' A ',
-		'PPP'
-	], {
-		P: OC('otherstone'),
-		A: 'hexcasting:amethyst_dust'
-	})	
-
-	let transitionalB = 'occultism:burnt_otherstone'//异界石板装配
-	event.recipes.createSequencedAssembly([
-		'3x occultism:otherstone_tablet',
-	], 'occultism:burnt_otherstone', [
-		event.recipes.createDeploying(transitionalB, [transitionalB, 'hexcasting:amethyst_dust']),
-		event.recipes.createPressing(transitionalB, [transitionalB]),
-	]).transitionalItem(transitionalB)
-		.loops(1)
-		.id('occultism:otherstone_tablet')
-
-	let transitionalC = 'occultism:otherstone_slab'//异界石板更简便的装配
-	event.recipes.createSequencedAssembly([
-		'3x occultism:otherstone_tablet',
-	], 'occultism:otherstone_slab', [
-		event.recipes.createFilling(transitionalC, [transitionalC, Fluid.of(TC('molten_amethyst'), 25)]),
-		event.recipes.createPressing(transitionalC, [transitionalC]),
-	]).transitionalItem(transitionalC)
-		.loops(2)
-		.id('occultism:otherstone_tablet_2')
-
 	event.recipes.createPressing('hexcasting:amethyst_dust', [MC('amethyst_shard')])//紫水晶粉
 	event.shapeless("hexcasting:amethyst_dust", [IM('#tools/hammers'), MC('amethyst_shard')])
 	event.custom({//紫水晶粉融化
@@ -1266,6 +1248,9 @@ arcane_core('ars_nouveau:mycelial_sourcelink', 1, FA('fungyss_hyphae'))
     //充能紫水晶
 	event.recipes.bloodmagic.altar('hexcasting:charged_amethyst', MC('amethyst_shard')).upgradeLevel(0).altarSyphon(1000).consumptionRate(5).drainRate(5)
 	event.recipes.botania.mana_infusion('hexcasting:charged_amethyst', MC('amethyst_shard'), 1000)
+*/
+/*
+
 
     //玻璃质仙人掌
 	event.recipes.botania.mana_infusion('moreminecarts:glass_cactus', MC('cactus'), 750)
@@ -1278,27 +1263,7 @@ arcane_core('ars_nouveau:mycelial_sourcelink', 1, FA('fungyss_hyphae'))
 	event.recipes.createFilling('moreminecarts:hard_light_lens', ['moreminecarts:organic_glass', Fluid.of(TC('molten_emerald'), 125)])
 	event.recipes.createFilling('moreminecarts:hard_light_lens', ['moreminecarts:organic_glass', Fluid.of(TC('molten_amethyst'), 125)])
 
-
-	//空白符文
-	event.replaceInput({ id: BM('blood_rune_blank') }, F("#stone"), FA("dark_rune"))
-
-	event.remove({ id: BM('altar/slate')})//空白石板
-	event.recipes.bloodmagic.altar(BM('blankslate'), OC('otherstone_tablet')).upgradeLevel(0).altarSyphon(1000).consumptionRate(5).drainRate(5)
-
-    //永恒之石
-	event.recipes.botania.mana_infusion(FA('xpetrified_orb'), 'create_sa:heap_of_experience', 1200)//石化经验球
-	event.recipes.botania.runic_altar(
-	FA("eternal_stella"), 
-		[FA('xpetrified_orb'), 
-		BO('terrasteel_ingot'), 
-		FA('xpetrified_orb'), 
-		FA('stellarite_piece'), 
-		'rubber_duck:rubber_duck_item', 
-		FA('xpetrified_orb'), 
-		BO('terrasteel_ingot'), 
-		FA('xpetrified_orb'), 
-		FA('stellarite_piece')
-	], 5000)
+*/
 }
 
 function tweaks(event) {
@@ -1320,6 +1285,7 @@ sails('create_dd:haunting_sail', 1, MC('soul_campfire'))
 sails('create_dd:blasting_sail', 1, MC('lava_bucket'))
 sails('create_dd:freezing_sail', 1, MC('powder_snow_bucket'))
 
+event.blasting(TE('coal_coke'), MC('coal'))
 
 ////热力刷石机
 let bedrock_cobblegen = (adjacent, output) => {
@@ -1425,16 +1391,8 @@ event.replaceInput({ id: MC("hopper") }, F('#ingots/iron'), TE('lead_plate'))//�
 event.remove({ id: TE("augments/item_filter_augment") })
 event.shapeless(TE("item_filter_augment"), [CR("filter"), TE("lapis_gear")])
 
-//金金金金金金
-event.remove({ id: 'createdeco:gold_coinstack' })
-event.remove({ id: 'createdeco:gold_coin' })
-event.shapeless("createdeco:gold_coinstack", [TE('gold_coin'), TE('gold_coin'), TE('gold_coin'), TE('gold_coin'), TE('gold_coin'), TE('gold_coin')])
-event.shaped(TE('gold_coin', 6), [
-	'C'
-], {
-	C: 'createdeco:gold_coinstack',
-})
-
+//绳子
+event.shapeless('supplementaries:rope', ['#supplementaries:ropes'])
 
 //削弱刷铁轨收益
 event.remove({ id: TC('smeltery/melting/metal/iron/nugget_3') })
@@ -1442,26 +1400,22 @@ event.remove({ id: TC('smeltery/melting/metal/gold/powered_rail') })
 event.remove({ id: TC('smeltery/melting/metal/iron/ingot_1') })
 event.recipes.createCrushing(
 	[Item.of(MC("stick")).withChance(0.35), 
-	Item.of(MC("iron_nugget")).withChance(0.07), 
-	Item.of(TE("iron_dust")).withChance(0.01)], 
+	Item.of(MC("iron_nugget")).withChance(0.05)], 
 	MC('rail')).processingTime(250)
 event.recipes.createCrushing(
 	[Item.of(MC("stick")).withChance(0.35), 
-	Item.of(MC("iron_nugget")).withChance(0.07), 
-	Item.of(TE("iron_dust")).withChance(0.01)], 
+	Item.of(MC("iron_nugget")).withChance(0.05)], 
 	 MC('detector_rail')).processingTime(250)
 event.recipes.createCrushing(
 	[Item.of(MC("stick")).withChance(0.35), 
-	Item.of(MC("iron_nugget")).withChance(0.07), 
-	Item.of(TE("iron_dust")).withChance(0.01)], 
+	Item.of(MC("iron_nugget")).withChance(0.05)], 
 	MC('activator_rail')).processingTime(250)		 
 event.recipes.createCrushing(
 	[Item.of(MC("stick")).withChance(0.35), 
-	Item.of(MC("gold_nugget")).withChance(0.07), 
-	Item.of(TE("gold_dust")).withChance(0.01)], 
+	Item.of(MC("gold_nugget")).withChance(0.05)], 
 	MC('powered_rail')).processingTime(250)
 
-event.smoking('minecraft:cooked_chicken', 'chickens:chicken_item').xp(0.25)
+//event.smoking('minecraft:cooked_chicken', 'chickens:chicken_item').xp(0.25)
 
 event.recipes.createCrushing([Item.of(AC('neptunium_ingot', 2)), Item.of(AC('neptunium_nugget', 5)).withChance(.5)], AC('neptunes_bounty')).processingTime(500)
 
@@ -1528,6 +1482,13 @@ event.shaped('waterstrainer:strainer_fisherman_reinforced', [
 	S: MC('bamboo')
 })
 
+//immersive_aircraft
+event.replaceInput({ id: 'immersive_aircraft:sail' }, 'minecraft:white_carpet', 'immersiveengineering:hemp_fabric')//风帆
+event.replaceInput({ id: 'immersive_aircraft:boiler' }, 'minecraft:furnace', 'kubejs:copper_machine')//发电机
+event.replaceInput({ id: 'immersive_aircraft:enhanced_propeller' }, 'minecraft:copper_ingot', 'create:brass_ingot')//增强型螺旋桨
+event.replaceInput({ id: 'immersive_aircraft:steel_boiler' }, 'minecraft:iron_ingot', 'create_dd:industrial_iron_ingot')//钢制锅炉
+event.replaceInput({ id: 'immersive_aircraft:improved_landing_gear' }, 'minecraft:coal', 'thermal:cured_rubber')//起落架
+
 }
 
 let float_and_lights = (event, item) => {//光辉石漂浮效果
@@ -1541,9 +1502,10 @@ let float_and_lights = (event, item) => {//光辉石漂浮效果
 
 onEvent('entity.spawned', event => {
     float_and_lights(event, KJ("radiant_coil"))
-	float_and_lights(event, KJ("radiant_sheet"))
+	//float_and_lights(event, KJ("radiant_sheet"))
 	float_and_lights(event, KJ("radiant_wire"))
 	float_and_lights(event, KJ("radiant_rod"))
 	float_and_lights(event, KJ("shadow_rod"))
+	float_and_lights(event, KJ("component_refined_radiance"))
 
 })

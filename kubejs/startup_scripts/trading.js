@@ -55,6 +55,7 @@ onEvent('item.registry', event => {
 			.displayName(`§6职业铭牌：§r${zhname}`)
 			.unstackable()
 
+		/*
 		event.create(`profession_agreement_${id}`)
 			.color(1, c1)
 			.color(2, c2)
@@ -62,6 +63,7 @@ onEvent('item.registry', event => {
 			.texture("kubejs:item/trade/purchase_agreement_0")
 			.displayName(`§6出售协议：§r${zhname}`)
 			.maxStackSize(32)
+		*/
 	}
 
 	let trade = (zhname, name, c1, c2, transactions, custom) => {
@@ -77,16 +79,20 @@ onEvent('item.registry', event => {
 			.unstackable()
 	}
 
-	event.create('empty_agreement').texture("kubejs:item/trade/empty_agreement").displayName('空白协议书')
-	event.create('incomplete_empty_agreement', 'create:sequenced_assembly').texture("kubejs:item/trade/incomplete_empty_agreement").displayName('空白协议书（未签字）')
-	event.create('master_agreement').texture("kubejs:item/trade/task_agreement").displayName('专精协议书').maxStackSize(4).rarity(RARITY_EPIC)
-	event.create('express_delivery').parentModel("kubejs:block/express_delivery/express_delivery").displayName('快递盒').unstackable().rarity(RARITY_UNCOMMON)
+	//event.create('empty_agreement').texture("kubejs:item/trade/empty_agreement").displayName('空白协议书')
+	//event.create('incomplete_empty_agreement', 'create:sequenced_assembly').texture("kubejs:item/trade/incomplete_empty_agreement").displayName('空白协议书（未签字）')
+	//event.create('master_agreement').texture("kubejs:item/trade/task_agreement").displayName('专精协议书').maxStackSize(4).rarity(RARITY_EPIC)
+	//event.create('express_delivery').parentModel("kubejs:block/express_delivery/express_delivery").displayName('快递盒').unstackable().rarity(RARITY_UNCOMMON)
 
 	//货币
+	let C = (x) => TE('copper_coin', x)
 	let S = (x) => TE('silver_coin', x)
 	let G = (x) => TE('gold_coin', x)
-	let BU = (x) => TE('bronze_coin', x)
+	let P = (x) => TE('bronze_coin', x)
+	let N = (x) => TE('netherite_coin', x)
+	let CC = (x) => TE('constantan_coin', x)
 
+/*
 	//烹饪币
 	let CO = (x) => TE('copper_coin', x)
 
@@ -100,10 +106,34 @@ onEvent('item.registry', event => {
 	let M = (x) => TE('lumium_coin', x)
 	let T = (x) => TE('netherite_coin', x)
 	let EL = (x) => TE('nickel_coin', x)
+*/
+    trade("§6货币兑换卡(铜↔银)", "Exchange Currencies A", 0x9c4529, 0x9fadb4, [
+		{ in: S(1), out: C(64) },
+		{ in: C(64), out: S(1) },
+	], true)
+
+	trade("§6货币兑换卡(银↔金)", "Exchange Currencies B", 0x9fadb4, 0xEBA83A, [
+		{ in: G(1), out: S(64) },
+		{ in: S(64), out: G(1) },
+	], true)
+	
+	trade("§6货币兑换卡(金↔铂)", "Exchange Currencies C", 0xEBA83A, 0x3AD7EB, [
+		{ in: P(1), out: G(64) },
+		{ in: G(64), out: P(1) },
+	], true)
+
+	trade("§6货币兑换卡(铂↔下界)", "Exchange Currencies D", 0x3AD7EB, 0x524f53, [
+		{ in: N(1), out: P(64) },
+		{ in: P(64), out: N(1) },
+	], true)
+
+	trade("§6货币兑换卡(下界↔创造)", "Exchange Currencies D", 0x524f53, 0xc44bbd, [
+		{ in: CC(1), out: N(64) },
+		{ in: N(64), out: CC(1) },
+	], true)
 
 	profession("皮匠", "Cobbler", 0x663931, 0x7d3b2f, [
 		{ in: F('#leather', 12), out: S(13), out2: S(4) },
-		{ in: SB('upgrade_base', 3), out: S(16), out2: S(3) },
 	])
 
 	profession("石匠", "Masonry", 0x5E6F64, 0xBA7967, [
@@ -118,43 +148,6 @@ onEvent('item.registry', event => {
 	let quota = 8
 	profession("渔夫", "Fishing", 0x9DDFD3, 0xDBF6E9, [
 		{ in: MC('cod', quota), out: S(1) },
-		{ in: MC('salmon', quota), out: S(1) },
-		{ in: MC('pufferfish', quota), out: S(1) },
-		{ in: MC('tropical_fish', quota), out: S(1) },
-		{ in: AC('atlantic_herring', quota), out: S(3) },
-		{ in: AC('synodontis', quota), out: S(3) },
-		{ in: AC('bluegill', quota), out: S(3) },
-		{ in: AC('perch', quota), out: S(3) },
-		{ in: AC('tambaqui', quota), out: S(3) },
-		{ in: AC('minnow', quota), out: S(4) },
-		{ in: AC('blackfish', quota), out: S(4) },
-		{ in: AC('pink_salmon', quota), out: S(5) },
-		{ in: AC('brown_trout', quota), out: S(5) },
-		{ in: AC('carp', quota), out: S(5) },
-		{ in: AC('pollock', quota), out: S(5) },
-		{ in: AC('smallmouth_bass', quota), out: S(5) },
-		{ in: AC('boulti', quota), out: S(5) },
-		{ in: AC('red_shrooma', quota), out: S(5) },
-		{ in: AC('brown_shrooma', quota), out: S(5) },
-		{ in: AC('gar', quota), out: S(7) },
-		{ in: AC('rainbow_trout', quota), out: S(7) },
-		{ in: AC('bayad', quota), out: S(7) },
-		{ in: AC('piranha', quota), out: S(7) },
-		{ in: AC('jellyfish', quota), out: S(7) },
-		{ in: AC('red_grouper', quota), out: S(7) },
-		{ in: AC('atlantic_cod', quota), out: S(7) },
-		{ in: AC('muskellunge', quota), out: S(8) },
-		{ in: AC('pacific_halibut', quota), out: S(8) },
-		{ in: AC('atlantic_halibut', quota), out: S(8) },
-		{ in: AC('catfish', quota), out: S(10) },
-		{ in: AC('capitaine', quota), out: S(10) },
-		{ in: AC('tuna', quota), out: S(10) },
-		{ in: AC('arapaima', quota), out: S(10) },
-		{ in: AC('arrau_turtle', quota), out: S(10) },
-		{ in: AC('box_turtle', quota), out: S(10) },
-		{ in: AC('starshell_turtle', quota), out: S(10) },
-		{ in: AC('goldfish', quota), out: S(10) },
-		{ in: AC('neptunium_ingot', 5), out: S(16) }
 	])
 	profession("铁匠", "Smithing", 0xFFC93C, 0xFF7A00, [
 		{ in: MC('iron_boots'), out: S(2) },
@@ -168,15 +161,6 @@ onEvent('item.registry', event => {
 	profession("矿工", "Mining", 0x1C1124, 0x88FFF7, [
 		{ in: CR('crushed_raw_iron', 16), out: S(8) },
 	])
-
-	trade("§6货币兑换卡(银↔金)", "Exchange Currencies A", 0xEBA83A, 0xF4F4F4, [
-		{ in: G(1), out: S(64) },
-		{ in: S(64), out: G(1) },
-	], true)
-	trade("§6货币兑换卡(金↔铂金)", "Exchange Currencies B", 0xEBA83A, 0x3AD7EB, [
-		{ in: BU(1), out: G(64) },
-		{ in: G(64), out: BU(1) },
-	], true)
 
 	let DATAGEN_QUESTS = false
 
@@ -421,21 +405,17 @@ onEvent('item.registry', event => {
 })
 
 onEvent('fluid.registry', event => {
-    event.create("sliver_coin")
-	.displayName("流体银币")
-	.bucketColor(0x2A3345)
-	.stillTexture('kubejs:fluid/coin/sliver_still')
-	.flowingTexture('kubejs:fluid/coin/sliver_flow')
-
-	//event.create("tech_coin_a").displayName("安山科技币").bucketColor(0xC1CDCD).stillTexture('kubejs:fluid/coin/tech_coin_a_still').flowingTexture('kubejs:fluid/coin/tech_coin_a_flow')
-	//event.create("tech_coin_b").displayName("黄铜科技币").bucketColor(0xB8860B).stillTexture('kubejs:fluid/coin/tech_coin_b_still').flowingTexture('kubejs:fluid/coin/tech_coin_b_flow')
-	//event.create("tech_coin_c").displayName("信素科技币").bucketColor(0xCD3700).stillTexture('kubejs:fluid/coin/tech_coin_c_still').flowingTexture('kubejs:fluid/coin/tech_coin_c_flow')
-	//event.create("tech_coin_d").displayName("谐振科技币").bucketColor(0x5F9EA0).stillTexture('kubejs:fluid/coin/tech_coin_d_still').flowingTexture('kubejs:fluid/coin/tech_coin_d_flow')
-
-
+/*
+event.create("sliver_coin").displayName("流体银币").bucketColor(0x2A3345).stillTexture('kubejs:fluid/coin/sliver_still').flowingTexture('kubejs:fluid/coin/sliver_flow')
+event.create("tech_coin_a").displayName("安山科技币").bucketColor(0xC1CDCD).stillTexture('kubejs:fluid/coin/tech_coin_a_still').flowingTexture('kubejs:fluid/coin/tech_coin_a_flow')
+event.create("tech_coin_b").displayName("黄铜科技币").bucketColor(0xB8860B).stillTexture('kubejs:fluid/coin/tech_coin_b_still').flowingTexture('kubejs:fluid/coin/tech_coin_b_flow')
+event.create("tech_coin_c").displayName("信素科技币").bucketColor(0xCD3700).stillTexture('kubejs:fluid/coin/tech_coin_c_still').flowingTexture('kubejs:fluid/coin/tech_coin_c_flow')
+event.create("tech_coin_d").displayName("谐振科技币").bucketColor(0x5F9EA0).stillTexture('kubejs:fluid/coin/tech_coin_d_still').flowingTexture('kubejs:fluid/coin/tech_coin_d_flow')
+*/
 })
 
 onEvent('block.registry', event => {
+/*
 	event.create('empty_express_delivery')
 	   .model('kubejs:block/express_delivery/empty_express_delivery')
        .material('wood')
@@ -443,4 +423,5 @@ onEvent('block.registry', event => {
 	   .box(.125, 0, .125, .875, 10.0 / 16.0, .875, false)
        .displayName('空快递盒')
 	   .tagBlock("create:wrench_pickup")
+*/
 })

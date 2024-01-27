@@ -1,8 +1,0 @@
-{
-  "type": "botania:state_copying_pure_daisy",
-  "input": {
-    "type": "tag",
-    "tag": "twilightforest:logs"
-  },
-  "output": "botania:livingwood_log"
-}

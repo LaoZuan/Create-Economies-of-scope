@@ -1,0 +1,46 @@
+{
+    "item.lightmanscurrency.coin_copper" : "铜币",
+    "item.lightmanscurrency.coin_copper.plural": "铜币",
+    "item.lightmanscurrency.coin_copper.initial": "铜",
+
+    "item.lightmanscurrency.coin_iron" : "银币",
+    "item.lightmanscurrency.coin_iron.plural" : "银币",
+    "item.lightmanscurrency.coin_iron.initial": "银",
+
+    "item.lightmanscurrency.coin_gold" : "金币",
+    "item.lightmanscurrency.coin_gold.plural" : "金币",
+    "item.lightmanscurrency.coin_gold.initial": "金",
+
+    "item.lightmanscurrency.coin_emerald" : "铂金币",
+    "item.lightmanscurrency.coin_emerald.plural" : "铂金币",
+    "item.lightmanscurrency.coin_emerald.initial": "铂金",
+
+    "item.lightmanscurrency.coin_diamond" : "下界合金币",
+    "item.lightmanscurrency.coin_diamond.plural" : "下界合金币",
+    "item.lightmanscurrency.coin_diamond.initial": "下界",
+
+    "item.lightmanscurrency.coin_netherite" : "Create币",
+    "item.lightmanscurrency.coin_netherite.plural" : "Create币",
+    "item.lightmanscurrency.coin_netherite.initial": "Create",
+
+    "gui.button.bank.deposit": "存入",
+    "gui.button.bank.withdraw": "取出",
+
+    "item.lightmanscurrency.wallet_copper" : "钱包（铜）",
+    "item.lightmanscurrency.wallet_iron" : "钱包（铁）",
+    "item.lightmanscurrency.wallet_gold" : "钱包（金）",
+    "item.lightmanscurrency.wallet_emerald" : "钱包（绿）",
+    "item.lightmanscurrency.wallet_diamond" : "钱包（钻）",
+    "item.lightmanscurrency.wallet_netherite" : "钱包（下界）",
+
+    "item.lightmanscurrency.item_capacity_upgrade_1": "容量升级 (铁)",
+    "item.lightmanscurrency.item_capacity_upgrade_2": "容量升级 (金)",
+    "item.lightmanscurrency.item_capacity_upgrade_3": "容量升级 (钻石)",
+    "item.lightmanscurrency.speed_upgrade_1": "速度升级 (铁)",
+    "item.lightmanscurrency.speed_upgrade_2": "速度升级 (金)",
+    "item.lightmanscurrency.speed_upgrade_3": "速度升级 (绿宝石)",
+    "item.lightmanscurrency.speed_upgrade_4": "速度升级 (钻石)",
+    "item.lightmanscurrency.speed_upgrade_5": "速度升级 (Netherite)",
+    "item.lightmanscurrency.network_upgrade": "网络升级",
+    "item.lightmanscurrency.hopper_upgrade": "漏斗升级"
+}

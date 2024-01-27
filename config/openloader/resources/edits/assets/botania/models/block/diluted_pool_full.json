@@ -1,0 +1,11 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "botania:block/shapes/diluted_mana_pool_full",
+	"textures": {
+		"bottom": "botania:block/pool/mana_pool_bottom",
+		"inside": "botania:block/pool/diluted_pool_inside",
+		"mana": "botania:block/mana_water",
+		"side": "botania:block/pool/diluted_pool_side",
+		"top": "botania:block/pool/diluted_pool_top"
+	}
+}

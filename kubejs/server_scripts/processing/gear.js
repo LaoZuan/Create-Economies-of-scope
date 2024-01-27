@@ -42,7 +42,7 @@ const CreateGear = (name, gear, ingot, gem, event) => {
    event.recipes.create.deploying({
     ingredients: [
       Ingredient.of(`#forge:ingots/${name}`),
-      [Ingredient.of("immersiveengineering:mold_gear"), Ingredient.of("thermal:press_gear_die"), Ingredient.of("tconstruct:gear_cast")]
+      [Ingredient.of("immersiveengineering:mold_gear"), Ingredient.of("thermal:press_gear_die")]
     ],
     results: [Item.of(gear)],
     keepHeldItem: true,
@@ -54,7 +54,7 @@ const CreateGear = (name, gear, ingot, gem, event) => {
     event.recipes.create.deploying({
       ingredients: [
         Ingredient.of(`#forge:gems/${name}`),
-        [Ingredient.of("immersiveengineering:mold_gear"), Ingredient.of("thermal:press_gear_die"), Ingredient.of("tconstruct:gear_cast")]
+        [Ingredient.of("immersiveengineering:mold_gear"), Ingredient.of("thermal:press_gear_die")]
       ],
       results: [Item.of(gear)],
       keepHeldItem: true,

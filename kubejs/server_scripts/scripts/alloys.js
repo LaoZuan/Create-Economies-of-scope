@@ -1,9 +1,11 @@
 onEvent('recipes', event => {
 	Recipes(event)
 	stone_alloys(event)
-	steel(event)//钢
-	ManaAlloys(event)//魔力合金
-	alloys(event)
+	cast_iron(event) //铸铁/工业铁
+	iron_compressed(event) //压缩铁
+	steel(event)  //钢
+	ManaAlloys(event)  //魔力合金
+	alloys(event) //合金
 })
 
 function Recipes(event) {
@@ -18,6 +20,8 @@ event.remove({ id: TC('compat/create/andesite_alloy_zinc') })
 event.remove({ id: TC('compat/create/andesite_alloy_iron') })
 event.remove({ output: AP('algal_brick') })
 event.remove({ id: AP('algal_blend') })
+event.remove({ id: 'create_dd:industrial_iron/andesite_alloy' })
+event.remove({ id: 'create_dd:industrial_iron/andesite_alloy_mixing' })
 
 event.remove({ output: BO('mana_powder') })
 event.remove({ id: BO('mana_infusion/manasteel') })
@@ -85,6 +89,31 @@ event.remove({ type: MC("crafting_shapeless"), output: TE('signalum_dust') })
 event.remove({ type: MC("crafting_shapeless"), output: TE('enderium_dust') })
 event.remove({ type: MC("crafting_shapeless"), output: TE('bronze_dust') })
 event.remove({ type: MC("crafting_shapeless"), output: TE('invar_dust') })
+
+event.remove({ id: PC("pressure_chamber/compressed_iron_ingot") })
+event.remove({ id: PC("pressure_chamber/compressed_iron_block") })
+event.remove({ id: PC("explosion_crafting/compressed_iron_ingot") })
+event.remove({ id: PC("explosion_crafting/compressed_iron_block") })
+
+event.remove({ output: 'createbigcannons:cast_iron_block' })
+event.remove({ output: 'createindustry:cast_iron_block' })	
+
+event.remove({ id: TE('fire_charge/invar_ingot_3') })
+event.remove({ id: TE('fire_charge/enderium_ingot_2') })
+event.remove({ id: TE('fire_charge/constantan_ingot_2') })
+event.remove({ id: TE('fire_charge/bronze_ingot_4') })
+event.remove({ id: TE('fire_charge/electrum_ingot_2') })
+event.remove({ id: TE('fire_charge/lumium_ingot_4') })
+event.remove({ id: TE('fire_charge/signalum_ingot_4') })
+event.remove({ id: TE('machine/pulverizer/pulverizer_cinnabar') })
+event.remove({ id: TE('machine/smelter/smelter_alloy_signalum') })
+event.remove({ id: TE('machine/smelter/smelter_alloy_lumium') })
+event.remove({ id: TE('machine/smelter/smelter_alloy_electrum') })
+event.remove({ id: TE('machine/smelter/smelter_alloy_enderium') })
+event.remove({ id: TE('machine/smelter/smelter_alloy_invar') })
+event.remove({ id: TE('machine/smelter/smelter_alloy_constantan') })
+event.remove({ id: TE('machine/smelter/smelter_alloy_bronze') })
+event.remove({ id: TE('compat/tconstruct/smelter_alloy_tconstruct_rose_gold_ingot') })
 }
 
 function stone_alloys(event) {
@@ -206,65 +235,168 @@ event.shaped(Item.of('create_dd:lapis_alloy', 2), [
 event.recipes.createMixing(Item.of('create_dd:lapis_alloy', 2), ['minecraft:lapis_lazuli', 'thermal:tin_nugget'])
 }
 
-function steel(event) {
-//铸铁浇筑
-event.custom({
-	"type": "tconstruct:casting_basin",
-	"fluid": { "name": "createbigcannons:molten_cast_iron", "amount": 810 },
-	"result": { "item": 'create:industrial_iron_block' },
-	"cooling_time": 405
-})
-//熔融铸铁
-event.custom({
-	"type": "tconstruct:melting",
-	"ingredient": {
-		"tag": "forge:ingots/cast_iron"
-	},
-	"result": {
-		"fluid": "createbigcannons:molten_cast_iron",
-		"amount": 90
-	},
-	"temperature": 790,
-	"time": 45
-})
-event.custom({
-	"type": "tconstruct:melting",
-	"ingredient": {
-		"tag": "forge:plates/cast_iron"
-	},
-	"result": {
-		"fluid": "createbigcannons:molten_cast_iron",
-		"amount": 90
-	},
-	"temperature": 790,
-	"time": 45
-})
-event.custom({
-	"type": "tconstruct:melting",
-	"ingredient": {
-		"tag": "forge:storage_blocks/industrial_iron"
-	},
-	"result": {
-		"fluid": "createbigcannons:molten_cast_iron",
-		"amount": 810
-	},
-	"temperature": 790,
-	"time": 405
-})
-event.custom({
-	"type": "tconstruct:melting",
-	"ingredient": {
-		"tag": "forge:nuggets/cast_iron"
-	},
-	"result": {
-		"fluid": "createbigcannons:molten_cast_iron",
-		"amount": 10
-	},
-	"temperature": 790,
-	"time": 5
-})
+function cast_iron(event) {
+////工业铁锭/铸铁
+///锭
+//工作盆加工
+event.recipes.createCompacting(['create_dd:industrial_iron_ingot'], [MC('iron_ingot')]).heated()
+//合金窑
+event.recipes.immersiveengineering.alloy('2x create_dd:industrial_iron_ingot', 'thermal:iron_dust', 'thermal:iron_dust')
+//高炉
+event.recipes.immersiveengineering.blast_furnace('create_dd:industrial_iron_ingot', MC('iron_ingot'), TE('slag')).time(180)
+event.recipes.immersiveengineering.blast_furnace('create:industrial_iron_block', MC('iron_block'), TE('slag_block')).time(1340)
+//感应炉
+event.recipes.thermal.smelter('2x create_dd:industrial_iron_ingot', ["minecraft:iron_ingot", "minecraft:iron_ingot"]).energy(8000)
+}
 
-////钢铁
+function iron_compressed(event) {
+////压缩铁锭
+///爆炸合成50%
+event.custom({
+	"type": "pneumaticcraft:explosion_crafting",
+	"input": {
+	  "item": "minecraft:iron_ingot"
+	},
+	"results": [
+	  {
+		"item": "pneumaticcraft:ingot_iron_compressed"
+	  }
+	],
+	"loss_rate": 50
+})//锭合成
+event.custom({
+	"type": "pneumaticcraft:explosion_crafting",
+	"input": {
+	  "item": "create:industrial_iron_block"
+	},
+	"results": [
+	  {
+		"item": "minecraft:iron_block"
+	  }
+	],
+	"loss_rate": 50
+})//块合成
+///爆炸合成25%
+event.custom({
+	"type": "pneumaticcraft:explosion_crafting",
+	"input": {
+	  "item": "create_dd:industrial_iron_ingot"
+	},
+	"results": [
+	  {
+		"item": "pneumaticcraft:ingot_iron_compressed"
+	  }
+	],
+	"loss_rate": 25
+})//锭合成
+event.custom({
+	"type": "pneumaticcraft:explosion_crafting",
+	"input": {
+	  "item": "create:industrial_iron_block"
+	},
+	"results": [
+	  {
+		"item": "pneumaticcraft:compressed_iron_block"
+	  }
+	],
+	"loss_rate": 25
+})//块合成
+///压缩加工
+event.custom({
+	"type": "pneumaticcraft:pressure_chamber",
+	"inputs": [
+	  {
+		"item": "create_dd:industrial_iron_ingot"
+	  }
+	],
+	"pressure": 2.0,
+	"results": [
+	  {
+		"item": "pneumaticcraft:ingot_iron_compressed"
+	  }
+	]
+})
+event.custom({
+	"type": "pneumaticcraft:pressure_chamber",
+	"inputs": [
+	  {
+		"item": "create:industrial_iron_block"
+	  }
+	],
+	"pressure": 2.0,
+	"results": [
+	  {
+		"item": "pneumaticcraft:compressed_iron_block"
+	  }
+	]
+})
+event.custom({
+	"type": "pneumaticcraft:pressure_chamber",
+	"inputs": [
+	  {
+		"item": "minecraft:iron_ingot"
+	  }
+	],
+	"pressure": 3.0,
+	"results": [
+	  {
+		"item": "pneumaticcraft:ingot_iron_compressed"
+	  }
+	]
+})
+event.custom({
+	"type": "pneumaticcraft:pressure_chamber",
+	"inputs": [
+	  {
+		"item": "create:industrial_iron_block"
+	  }
+	],
+	"pressure": 3.0,
+	"results": [
+	  {
+		"item": "minecraft:iron_block"
+	  }
+	]
+})
+//无序合成
+event.shapeless(PC('ingot_iron_compressed'), ['create_dd:industrial_iron_ingot', 'create_dd:industrial_iron_ingot', TE('earth_charge')])
+event.shapeless(PC('ingot_iron_compressed'), ['minecraft:iron_ingot', 'minecraft:iron_ingot', 'minecraft:iron_ingot', TE('earth_charge')])
+//板材
+event.recipes.createPressing(KJ("iron_compressed_sheet"), PC("ingot_iron_compressed"))//压缩铁板
+//还原
+event.blasting(PC('ingot_iron_compressed'), KJ('iron_compressed_sheet'))
+//压缩铁齿轮
+event.remove({ id: 'pneumaticcraft:compressed_iron_gear' })
+//合成
+event.shaped('4x pneumaticcraft:compressed_iron_gear', [
+	' A ',
+	'ASA',
+	' A ',
+], {
+	A: 'pneumaticcraft:ingot_iron_compressed',
+	S: ['minecraft:iron_nugget', 'create:zinc_nugget', 'thermal:nickel_nugget', 'thermal:tin_nugget']
+})
+//冲压
+event.recipes.thermalPress('pneumaticcraft:compressed_iron_gear', [
+	'pneumaticcraft:ingot_iron_compressed',
+	"thermal:press_gear_die",
+])
+event.recipes.create.deploying({
+	ingredients: [
+	  Ingredient.of('pneumaticcraft:ingot_iron_compressed'),
+	  [Ingredient.of("immersiveengineering:mold_gear"), Ingredient.of("thermal:press_gear_die")]
+	],
+	results: [Item.of('pneumaticcraft:compressed_iron_gear')],
+	keepHeldItem: true,
+})
+event.recipes.immersiveengineeringMetalPress(
+	'pneumaticcraft:compressed_iron_gear',
+	'pneumaticcraft:ingot_iron_compressed',
+	"immersiveengineering:mold_gear"
+)
+}
+
+function steel(event) {
 ////生铁变钢
 //高炉
 event.recipes.immersiveengineering.blast_furnace('create_dd:steel_ingot', TC('pig_iron_ingot'), TE('slag')).time(460)
@@ -302,45 +434,55 @@ let stb = KJ('steel_block_compound')
 }
 
 function ManaAlloys(event) {
-////神秘金
-//流体搅拌
-event.recipes.createMixing(Fluid.of('materialis:molten_arcane_gold', 100), [Fluid.of(TC('molten_gold'), 100), 'minecraft:honey_block']).processingTime(100)
-event.custom({
-	"type": "create:mixing",
-	"ingredients": [
-	  {
-		"fluid": "tconstruct:molten_gold",
-		"amount": 100
-	  },
-	  {
-		"fluidTag": "forge:honey",
-		"amount": 100
-	  }
-	],
-	"results": [
-	  {
-		"fluid": "materialis:molten_arcane_gold",
-		"amount": 100
-	  }
-	]
-})
-//合金窑
-event.recipes.immersiveengineering.alloy(FA('arcane_gold_ingot'), MC('gold_ingot'), MC('honey_block'))
-
 ////魔力钢
 //流体搅拌
-event.recipes.createMixing(Fluid.of('materialis:molten_manasteel', 110), [Fluid.of(TC('molten_iron'), 90), BO('mana_pearl')]).processingTime(110)
-event.recipes.createMixing(Fluid.of('materialis:molten_manasteel', 110), [Fluid.of(TC('molten_iron'), 90), BO('mana_powder', 4)]).processingTime(110)
-//魔力灌注
+//event.recipes.createMixing(Fluid.of('materialis:molten_manasteel', 90), [Fluid.of(TC('molten_tin'), 90), BO('mana_pearl')]).processingTime(110)
+event.recipes.createMixing(Fluid.of('materialis:molten_manasteel', 90), [Fluid.of(TC('molten_tin'), 90), BO('mana_powder', 4)]).processingTime(110)
+//附魔装置
 //event.recipes.botania.mana_infusion(KJ('raw_mana_steel'), MC('raw_iron'), 4000)
 //event.recipes.botania.mana_infusion(BO('manasteel_ingot'), MC('iron_ingot'), 6000)
+event.custom({
+  "type": "ars_nouveau:enchanting_apparatus",
+  "reagent": [
+    {
+      "item": "thermal:tin_ingot"
+    }
+  ],
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "botania:mana_powder"
+      }
+    },
+    {
+      "item": {
+        "item": "botania:mana_powder"
+      }
+    },
+    {
+      "item": {
+        "item": "botania:mana_powder"
+      }
+    },
+    {
+      "item": {
+        "item": "botania:mana_powder"
+      }
+    }
+  ],
+  "output": {
+    "item": "kubejs:manasteel_compound"
+  },
+  "sourceCost": 1000,
+  "keepNbtOfReagent": false
+})
 //魔钢混合物
-event.recipes.immersiveengineering.alloy(KJ('manasteel_compound'), MC('iron_ingot'), BO('mana_powder', 4))
-event.recipes.immersiveengineering.alloy(KJ('manasteel_compound'), MC('iron_ingot'), BO('mana_pearl'))
+event.recipes.immersiveengineering.alloy(KJ('manasteel_compound'), TE('tin_ingot'), BO('mana_powder', 4))
+//event.recipes.immersiveengineering.alloy(KJ('manasteel_compound'), TE('tin_ingot'), BO('mana_pearl'))
 //还原
-event.recipes.immersiveengineering.alloy('botania:manasteel_ingot', KJ('manasteel_compound'),['botania:mana_powder', 'thermal:rosin'])
-event.recipes.createCompacting(['botania:manasteel_ingot', 'botania:manasteel_nugget'], [KJ('manasteel_compound')]).heated()
-event.recipes.botania.mana_infusion('botania:manasteel_ingot', KJ('manasteel_compound'), 750)
+event.recipes.immersiveengineering.alloy('2x botania:manasteel_ingot', KJ('manasteel_compound'), KJ('manasteel_compound'))
+event.recipes.createCompacting('botania:manasteel_ingot', [KJ('manasteel_compound')]).heated()
+event.recipes.botania.mana_infusion('2x botania:manasteel_ingot', KJ('manasteel_compound'), 6000)
 }
 
 function alloys(event) {
@@ -354,8 +496,9 @@ event.recipes.createMixing(Fluid.of(TC('molten_brass'), 8), [Fluid.of(TC('molten
 //铜锌混合物
 event.recipes.immersiveengineering.alloy('kubejs:brass_compound', 'minecraft:copper_ingot', 'kubejs:zinc_dust')
 //还原
-event.recipes.immersiveengineering.alloy('2x create:brass_ingot', KJ('brass_compound'), 'thermal:rosin')
+event.recipes.immersiveengineering.alloy('4x create:brass_ingot', KJ('brass_compound'), KJ('brass_compound'))
 event.recipes.createCompacting([CR('brass_ingot', 2)], [KJ('brass_compound')]).heated()
+//event.recipes.thermal.smelter(CR('brass_ingot', 2), [MC("copper_ingot"), CR("zinc_ingot")])
 
 ////青铜
 //流体搅拌
@@ -363,7 +506,7 @@ event.recipes.createMixing(Fluid.of(TC('molten_bronze'), 8), [Fluid.of(TC('molte
 //铜锡混合物
 event.recipes.immersiveengineering.alloy('kubejs:bronze_compound', 'minecraft:copper_ingot', 'thermal:tin_dust')
 //还原
-event.recipes.immersiveengineering.alloy('2x create_dd:bronze_ingot', KJ('bronze_compound'), 'thermal:rosin')
+event.recipes.immersiveengineering.alloy('4x create_dd:bronze_ingot', KJ('bronze_compound'), KJ('bronze_compound'))
 event.recipes.createCompacting(['2x create_dd:bronze_ingot'], [KJ('bronze_compound')]).heated()
 event.recipes.thermal.smelter('2x create_dd:bronze_ingot', [MC("copper_ingot"), TE("tin_ingot")])
 
@@ -373,7 +516,7 @@ event.recipes.createMixing(Fluid.of(TC('molten_constantan'), 8), [Fluid.of(TC('m
 //铜镍混合物
 event.recipes.immersiveengineering.alloy('kubejs:constantan_compound', 'minecraft:copper_ingot', 'thermal:nickel_dust')
 //还原
-event.recipes.immersiveengineering.alloy('2x thermal:constantan_ingot', KJ('constantan_compound'), 'thermal:rosin')
+event.recipes.immersiveengineering.alloy('4x thermal:constantan_ingot', KJ('constantan_compound'), KJ('constantan_compound'))
 event.recipes.createCompacting(['2x thermal:constantan_ingot'], [KJ('constantan_compound')]).heated()
 event.recipes.thermal.smelter(TE("constantan_ingot", 2), [MC("copper_ingot"), TE("nickel_ingot")])
 
@@ -383,7 +526,7 @@ event.recipes.createMixing(Fluid.of(TC('molten_rose_gold'), 8), [Fluid.of(TC('mo
 //铜金混合物
 event.recipes.immersiveengineering.alloy('kubejs:rose_gold_compound', 'minecraft:copper_ingot', 'thermal:gold_dust')
 //还原
-event.recipes.immersiveengineering.alloy('2x tconstruct:rose_gold_ingot', KJ('rose_gold_compound'), 'thermal:rosin')
+event.recipes.immersiveengineering.alloy('4x tconstruct:rose_gold_ingot', KJ('rose_gold_compound'), KJ('rose_gold_compound'))
 event.recipes.createCompacting(['2x tconstruct:rose_gold_ingot'], [KJ('rose_gold_compound')]).heated()
 event.recipes.thermal.smelter(TC("rose_gold_ingot", 2), [MC("copper_ingot"), MC("gold_ingot")])
 
@@ -393,7 +536,7 @@ event.recipes.createMixing(Fluid.of(TC('molten_electrum'), 8), [Fluid.of(TC('mol
 //金银混合物
 event.recipes.immersiveengineering.alloy('kubejs:electrum_compound', 'minecraft:gold_ingot', 'thermal:silver_dust')
 //还原
-event.recipes.immersiveengineering.alloy('2x thermal:electrum_ingot', KJ('electrum_compound'), 'thermal:rosin')
+event.recipes.immersiveengineering.alloy('4x thermal:electrum_ingot', KJ('electrum_compound'), KJ('electrum_compound'))
 event.recipes.createCompacting(['2x thermal:electrum_ingot'], [KJ('electrum_compound')]).heated()
 event.recipes.thermal.smelter(TE("electrum_ingot", 2), [TE("silver_ingot"), MC("gold_ingot")])
 
@@ -434,7 +577,7 @@ event.recipes.thermal.smelter(MC('netherite_ingot', 2), [MC('netherite_scrap', 4
 event.shapeless(KJ('nickel_compound'), [TE('nickel_ingot'), CR("crushed_raw_iron")])
 event.recipes.immersiveengineering.alloy('kubejs:nickel_compound', 'thermal:nickel_ingot', 'thermal:iron_dust')
 //殷瓦钢胚
-event.recipes.immersiveengineering.alloy('2x kubejs:invar_compound', 'kubejs:nickel_compound', 'thermal:rosin')
+event.recipes.immersiveengineering.alloy('4x kubejs:invar_compound', 'kubejs:nickel_compound', 'kubejs:nickel_compound')
 event.recipes.thermal.smelter([KJ("invar_compound"), KJ("invar_compound")], [TE("nickel_ingot"), MC("iron_ingot")])
 event.blasting(KJ('invar_compound'), KJ('nickel_compound'))
 //殷瓦锭
@@ -446,35 +589,7 @@ let s = KJ('invar_compound')
 	]).transitionalItem(s)
 		.loops(16)
 		.id('kubejs:invar')
-
-////工业铁锭/铸铁
-event.remove({ output: 'createbigcannons:cast_iron_block' })
-event.remove({ output: 'createindustry:cast_iron_block' })
-//2合1
-event.custom({
-  "type": "create:compacting",
-  "ingredients": [
-    {
-      "item": "create:iron_sheet",
-      "amount": 2
-    }
-  ],
-  "results": [
-    {
-      "item": "create_dd:industrial_iron_ingot",
-      "amount": 1
-    }
-  ],
-  "heatRequirement":"lowheated"
-})
-event.recipes.thermal.smelter('create_dd:industrial_iron_ingot', [CR('iron_sheet'), CR('iron_sheet')]).energy(6000)
-//2合2
-event.recipes.immersiveengineering.alloy('2x create_dd:industrial_iron_ingot', 'thermal:iron_dust', 'thermal:iron_dust')
-event.recipes.createCompacting(['create_dd:industrial_iron_ingot'], [MC('iron_ingot')]).heated()
-event.recipes.thermal.smelter('2x create_dd:industrial_iron_ingot', ["minecraft:iron_ingot", "minecraft:iron_ingot", [IM("slag_gravel"), TE('rosin')]]).energy(8000)
-event.recipes.immersiveengineering.blast_furnace('create_dd:industrial_iron_ingot', MC('iron_ingot'), TE('slag')).time(180)
-event.recipes.immersiveengineering.blast_furnace('create:industrial_iron_block', MC('iron_block'), TE('slag_block')).time(1340)
-
+		
 ////生铁
 //流体搅拌
 event.recipes.createMixing(Fluid.of(TC('molten_pig_iron'), 8), [
@@ -499,8 +614,11 @@ event.recipes.thermal.smelter(KJ("pigiron_compound"), ["botania:manasteel_ingot"
 event.recipes.immersiveengineering.alloy(KJ("pigiron_compound"), "botania:manasteel_ingot", 'tconstruct:blood_slime')
 event.recipes.immersiveengineering.alloy(KJ("pigiron_compound"), "botania:manasteel_ingot", 'minecraft:honey_block')
 //还原
-event.recipes.immersiveengineering.alloy('2x tconstruct:pig_iron_ingot', KJ('pigiron_compound'),['botania:mana_powder', 'thermal:rosin'])
+event.recipes.immersiveengineering.alloy('4x tconstruct:pig_iron_ingot', KJ('pigiron_compound'), KJ('pigiron_compound'))
 event.recipes.createCompacting(['2x tconstruct:pig_iron_ingot'], [KJ('pigiron_compound')]).heated()
 event.recipes.botania.mana_infusion('3x tconstruct:pig_iron_ingot', KJ('pigiron_compound'), 1500)
 
 }
+
+onEvent('item.tags', event => {
+})

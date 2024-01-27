@@ -1,0 +1,122 @@
+{
+  "CoinEntries": [
+    {
+      "coinitem": "thermal:copper_coin",
+      "chain": "main",
+      "initial": "item.lightmanscurrency.coin_copper.initial",
+      "plural": "item.lightmanscurrency.coin_copper.plural"
+    },
+    {
+      "coinitem": "thermal:silver_coin",
+      "chain": "main",
+      "worth": {
+        "coin": "thermal:copper_coin",
+        "count": 64
+      },
+      "initial": "item.lightmanscurrency.coin_iron.initial",
+      "plural": "item.lightmanscurrency.coin_iron.plural"
+    },
+    {
+      "coinitem": "thermal:gold_coin",
+      "chain": "main",
+      "worth": {
+        "coin": "thermal:silver_coin",
+        "count": 64
+      },
+      "initial": "item.lightmanscurrency.coin_gold.initial",
+      "plural": "item.lightmanscurrency.coin_gold.plural"
+    },
+    {
+      "coinitem": "thermal:bronze_coin",
+      "chain": "main",
+      "worth": {
+        "coin": "thermal:gold_coin",
+        "count": 64
+      },
+      "initial": "item.lightmanscurrency.coin_emerald.initial",
+      "plural": "item.lightmanscurrency.coin_emerald.plural"
+    },
+    {
+      "coinitem": "thermal:netherite_coin",
+      "chain": "main",
+      "worth": {
+        "coin": "thermal:bronze_coin",
+        "count": 64
+      },
+      "initial": "item.lightmanscurrency.coin_diamond.initial",
+      "plural": "item.lightmanscurrency.coin_diamond.plural"
+    },
+    {
+      "coinitem": "thermal:constantan_coin",
+      "chain": "main",
+      "worth": {
+        "coin": "thermal:netherite_coin",
+        "count": 64
+      },
+      "initial": "item.lightmanscurrency.coin_netherite.initial",
+      "plural": "item.lightmanscurrency.coin_netherite.plural"
+    },
+
+
+    {
+      "coinitem": "createdeco:copper_coinstack",
+      "chain": "main",
+      "worth": {
+        "coin": "thermal:copper_coin",
+        "count": 9
+      },
+      "plural": "block.lightmanscurrency.coinpile_copper.plural",
+      "hidden": true
+    },
+    {
+      "coinitem": "createdeco:zinc_coinstack",
+      "chain": "main",
+      "worth": {
+        "coin": "thermal:silver_coin",
+        "count": 9
+      },
+      "plural": "block.lightmanscurrency.coinpile_iron.plural",
+      "hidden": true
+    },
+    {
+      "coinitem": "createdeco:gold_coinstack",
+      "chain": "main",
+      "worth": {
+        "coin": "thermal:gold_coin",
+        "count": 9
+      },
+      "plural": "block.lightmanscurrency.coinpile_gold.plural",
+      "hidden": true
+    },
+    {
+      "coinitem": "createdeco:brass_coinstack",
+      "chain": "main",
+      "worth": {
+        "coin": "thermal:bronze_coin",
+        "count": 9
+      },
+      "plural": "block.lightmanscurrency.coinpile_emerald.plural",
+      "hidden": true
+    },
+    {
+      "coinitem": "createdeco:netherite_coinstack",
+      "chain": "main",
+      "worth": {
+        "coin": "thermal:netherite_coin",
+        "count": 9
+      },
+      "plural": "block.lightmanscurrency.coin_diamond.plural",
+      "hidden": true
+    },
+    {
+      "coinitem": "createdeco:netherite_coinstack",
+      "chain": "main",
+      "worth": {
+        "coin": "createdeco:iron_coinstack",
+        "count": 9
+      },
+      "plural": "block.lightmanscurrency.coin_netherite.plural",
+      "hidden": true
+    }
+  ]
+}

@@ -1,8 +1,0 @@
-{
-  "type": "botania:state_copying_pure_daisy",
-  "input": {
-    "type": "block",
-    "block": "forbidden_arcanus:mysterywood_log"
-  },
-  "output": "botania:livingwood_log"
-}

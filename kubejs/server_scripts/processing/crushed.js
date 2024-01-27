@@ -1,26 +1,8 @@
 const Crushed = (obj, event) => {
-  Crusheds(
-    obj.name,
-    obj.crushed,
-    obj.gem,
-    obj.ore,
-    obj.deepslateOre,
-    obj.rawOre,
-    obj.rawOreBlock,
-    event
-  );
+  Crusheds(obj.name, obj.crushed, obj.gem, obj.ore, obj.deepslateOre, obj.netherOre, obj.endOre, obj.rawOre, obj.rawOreBlock, event);
 };
 
-const Crusheds = (
-  name,
-  crushed,
-  gem,
-  ore,
-  deepslateOre,
-  rawOre,
-  rawOreBlock,
-  event
-) => {
+const Crusheds = (name, crushed, gem, ore, deepslateOre, netherOre, endOre, rawOre, rawOreBlock, event) => {
   if (crushed === "") return;
 
   if (ore) {
@@ -107,6 +89,68 @@ const Crusheds = (
           Item.of(`minecraft:cobbled_deepslate`).withChance(0.125),
         ],
         deepslateOre
+      );
+    }
+  }
+
+  if (netherOre) {
+    event.remove({ id: `create:crushing/${name}_ore` });
+
+    if (crushed !== "") {
+      event.remove({ input: "#forge:ores/" + name, type: TE("pulverizer") })
+
+      event.recipes.thermal.pulverizer([`2x ${crushed}`], netherOre).energy(3000)
+      event.recipes.createCrushing(
+        [
+          `2x ${crushed}`,
+          Item.of(crushed).withChance(0.25),
+          Item.of(`create:experience_nugget`).withChance(0.75),
+          Item.of(`minecraft:netherrack`).withChance(0.125),
+        ],
+        netherOre
+      );
+    }
+
+    if (gem !== "") {
+      event.recipes.createCrushing(
+        [
+          `2x ${gem}`,
+          Item.of(gem).withChance(0.25),
+          Item.of(`create:experience_nugget`).withChance(0.75),
+          Item.of(`minecraft:netherrack`).withChance(0.125),
+        ],
+        netherOre
+      );
+    }
+  }
+
+  if (endOre) {
+    event.remove({ id: `create:crushing/${name}_ore` });
+
+    if (crushed !== "") {
+      event.remove({ input: "#forge:ores/" + name, type: TE("pulverizer") })
+
+      event.recipes.thermal.pulverizer([`2x ${crushed}`], endOre).energy(3000)
+      event.recipes.createCrushing(
+        [
+          `2x ${crushed}`,
+          Item.of(crushed).withChance(0.25),
+          Item.of(`create:experience_nugget`).withChance(0.75),
+          Item.of(`minecraft:end_stone`).withChance(0.125),
+        ],
+        endOre
+      );
+    }
+
+    if (gem !== "") {
+      event.recipes.createCrushing(
+        [
+          `2x ${gem}`,
+          Item.of(gem).withChance(0.25),
+          Item.of(`create:experience_nugget`).withChance(0.75),
+          Item.of(`minecraft:end_stone`).withChance(0.125),
+        ],
+        endOre
       );
     }
   }

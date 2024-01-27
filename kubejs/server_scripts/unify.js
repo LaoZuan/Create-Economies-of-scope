@@ -1,7 +1,23 @@
-onEvent("recipes", (event) => {
+onEvent('recipes', event => {
+
+let replaceIO = (tag, item) => {
+  event.replaceInput(dontReplaceMe, tag, item);
+  event.replaceOutput(dontReplaceMe, tag, item);
+};
+
+let removeIO = (item) => {
+  event.remove({ input: item });
+  event.remove({ output: item });
+};
+
+let recompact = (id, id2) => {
+  event.recipes.createCompacting(id2, [id]);
+};
+
+
+////移除配方
+
   event.remove({ id: "immersiveengineering:crusher/ore_coal" })
-  event.remove({ input: "#alltheores:ore_hammers" })
-  event.remove({ output: "#alltheores:ore_hammers" })
   event.remove({ id: "tconstruct:smeltery/melting/metal/copper/ore_dense" })
   event.remove({ input: "immersiveengineering:ore_lead" })
   event.remove({ input: "immersiveengineering:ore_uranium" })
@@ -12,7 +28,17 @@ onEvent("recipes", (event) => {
   event.remove({ input: "immersiveengineering:raw_block_uranium" })
   event.remove({ output: "immersiveengineering:raw_block_uranium" })
 
-  const dontReplaceMe = {
+  event.remove({ input: "darkerdepths:aridrock_gold_ore" })
+	event.remove({ input: "darkerdepths:aridrock_iron_ore" })
+	event.remove({ input: "darkerdepths:limestone_gold_ore" })
+	event.remove({ input: "darkerdepths:limestone_iron_ore" })
+
+  event.remove({ id: "createaddition:pressing/steel_ingot" })
+
+  removeIO('createindustry:saltpeter')
+  removeIO('createindustry:sulfur_powder')
+
+const dontReplaceMe = {
     not: [
       { id: /botania:.*_quartz/ },
       { id: /botania:.*_quartz_slab/ },
@@ -41,84 +67,16 @@ onEvent("recipes", (event) => {
 
       { id: /.*yellow*./ },
     ],
-  };
-
-  event.recipes.createMilling(MEK("dust_fluorite"), MEK("fluorite_gem"))
-  event.recipes.createMilling(MEK("fluorite_gem", 6), MEK("fluorite_ore"))
-  event.recipes.createMilling(MEK("fluorite_gem", 6), MEK("deepslate_fluorite_ore"))
-	event.recipes.createCrushing([Item.of(MEK("fluorite_gem"), 6), Item.of(MEK("fluorite_gem"), 2).withChance(0.75), Item.of(CR("experience_nugget"), 1).withChance(0.75), Item.of(MC("cobblestone")).withChance(0.12)], MEK("fluorite_ore"))
-	event.recipes.createCrushing([Item.of(MEK("fluorite_gem"), 6), Item.of(MEK("fluorite_gem"), 2).withChance(0.75), Item.of(CR("experience_nugget"), 1).withChance(0.75), Item.of(MC("cobbled_deepslate")).withChance(0.12)], MEK("deepslate_fluorite_ore"))
-
-	event.recipes.createCrushing([Item.of(CR("crushed_raw_lead")).withChance(0.30), Item.of(TE("lead_nugget")).withChance(0.30)], IM("ore_lead"))
-  event.recipes.createCrushing([Item.of(CR("crushed_raw_uranium")).withChance(0.30), Item.of(TE("lead_nugget")).withChance(0.30)], IM("ore_uranium"))
-
-  event.recipes.createMilling(TE("sawdust", 2), "#forge:rods/wooden")
-  event.recipes.createMilling(TE("sawdust", 2), "#minecraft:wooden_slabs")
-  event.recipes.createMilling(TE("sawdust", 4), "#minecraft:planks")
-  event.recipes.createMilling([Item.of(TE('sawdust')).withChance(0.85)], "#immersive_weathering:bark")
-  event.shaped(MC('stick', 1), [
-		'S',
-	], {
-		S: '#immersive_weathering:bark'
-	})
-
-let woodcutting = (mod, log, planks, slab, bark, sawdust) => {
-  event.remove({ id: "create:cutting/stripped_" + log })
-  event.remove({ id: "create:cutting/" + log })
-  event.remove({ id: "create:cutting/" + planks })
-  event.remove({ id: "create:cutting/" + slab })
-  event.recipes.createCutting([mod + ":stripped_" + log,  Item.of((bark))], mod + ":" + log).processingTime(50)
-	event.recipes.createCutting([Item.of(mod + ":" + planks, 6), Item.of((sawdust))], mod + ":stripped_" + log).processingTime(50)
-	event.recipes.createCutting([Item.of(mod + ":" + slab, 2), Item.of((sawdust)).withChance(0.75)], mod + ":" + planks).processingTime(50)
-}
-
-woodcutting("minecraft", "dark_oak_log", "dark_oak_planks", "dark_oak_slab", "immersive_weathering:dark_oak_bark", TE('sawdust'))
-woodcutting("minecraft", "oak_log", "oak_planks", "oak_slab", "immersive_weathering:oak_bark", TE('sawdust'))
-woodcutting("minecraft", "spruce_log", "spruce_planks", "spruce_slab", "immersive_weathering:spruce_bark", TE('sawdust'))
-woodcutting("minecraft", "birch_log", "birch_planks", "birch_slab", "immersive_weathering:birch_bark", TE('sawdust'))
-woodcutting("minecraft", "jungle_log", "jungle_planks", "jungle_slab", "immersive_weathering:jungle_bark", TE('sawdust'))
-woodcutting("minecraft", "acacia_log", "acacia_planks", "acacia_slab", "immersive_weathering:acacia_bark", TE('sawdust'))
-woodcutting("minecraft", "warped_stem", "warped_planks", "warped_slab", "immersive_weathering:warped_scales", TE("sawdust"))
-woodcutting("minecraft", "crimson_stem", "crimson_planks", "crimson_slab", "immersive_weathering:crimson_scales", TE("sawdust"))
-woodcutting("tconstruct", "greenheart_log", "greenheart_planks", "greenheart_planks_slab", 'immersive_weathering:tconstruct/greenheart_bark', 'minecraft:slime_ball')
-woodcutting("tconstruct", "skyroot_log", "skyroot_planks", "skyroot_planks_slab", 'immersive_weathering:tconstruct/skyroot_bark', 'tconstruct:sky_slime_ball')
-woodcutting("tconstruct", "bloodshroom_log", "bloodshroom_planks", "bloodshroom_planks_slab", 'immersive_weathering:tconstruct/bloodshroom_bark', 'tconstruct:ichor_slime_ball')
-woodcutting("forbidden_arcanus", "mysterywood_log", "mysterywood_planks", "mysterywood_slab", 'immersive_weathering:forbidden_arcanus/mysterywood_bark', 'kubejs:mysterywood_sawdust')
-woodcutting("forbidden_arcanus", "cherrywood_log", "cherrywood_planks", "cherrywood_slab", 'immersive_weathering:forbidden_arcanus/cherrywood_bark', TE("sawdust"))
-woodcutting("ars_nouveau", "blue_archwood_log", "archwood_planks", "archwood_slab", 'farmersdelight:tree_bark', TE("sawdust"))
-woodcutting("ars_nouveau", "purple_archwood_log", "archwood_planks", "archwood_slab", 'farmersdelight:tree_bark', TE("sawdust"))
-woodcutting("ars_nouveau", "green_archwood_log", "archwood_planks", "archwood_slab", 'farmersdelight:tree_bark', TE("sawdust"))
-woodcutting("ars_nouveau", "red_archwood_log", "archwood_planks", "archwood_slab", 'farmersdelight:tree_bark', TE("sawdust"))
-woodcutting("botania", "livingwood_log", "livingwood_planks", "livingwood_planks_slab", 'immersive_weathering:botania/livingwood_bark', TE("sawdust"))
-//woodcutting("enlightened_end", "congealed_stem", "congealed_planks", "congealed_slab", 'immersive_weathering:enlightened_end/congealed_bark', TE("sawdust"))
-//woodcutting("enlightened_end", "congealed_stem", "congealed_planks", "congealed_slab", 'immersive_weathering:enlightened_end/congealed_bark', TE("sawdust"))
+};
 
 
-let wood_types = [
-  BOP('fir'), BOP('redwood'), BOP('cherry'), BOP('mahogany'), BOP('jacaranda'), BOP('palm'), BOP('willow'), BOP('dead'), BOP('magic'), BOP('umbran'), BOP('hellbark'), 
-  FA('edelwood'), FA('fungyss'), 
-  AP('twisted'), 
-  TF('twilight_oak'), TF('mangrove'), TF('dark'), TF('time'), TF('transformation'), TF('mining'), TF('sorting')]
-wood_types.forEach(wood => {
-event.recipes.createCutting(['2x ' + wood + '_slab', Item.of(TE("sawdust")).withChance(0.75)], wood + '_planks').processingTime(50)
-})
+////配方
 
-  let replaceIO = (tag, item) => {
-    event.replaceInput(dontReplaceMe, tag, tag);
-    event.replaceOutput(dontReplaceMe, tag, item);
-  };
-
-  event.replaceInput(
-    "minecraft:lava_bucket",
-    Ingredient.of([Item.of("chickens:liquid_egg", '{id:"minecraft:lava"}'), "minecraft:lava_bucket"]).toJson()
-  );
-  event.replaceInput(
-    "minecraft:water_bucket",
-    Ingredient.of([Item.of("chickens:liquid_egg", '{id:"minecraft:water"}'), "minecraft:water_bucket"]).toJson()
-  );
-  event.replaceInput('createindustry:bauxite', 'immersiveengineering:raw_aluminum')
-  event.replaceInput('forbidden_arcanus:arcane_crystal', '#forge:gems/arcane_crystal')
-
+///氟石
+event.recipes.createMilling(MEK("fluorite_gem", 6), MEK("fluorite_ore"))
+event.recipes.createMilling(MEK("fluorite_gem", 6), MEK("deepslate_fluorite_ore"))
+event.recipes.createCrushing([Item.of(MEK("fluorite_gem"), 6), Item.of(MEK("fluorite_gem"), 2).withChance(0.75), Item.of(CR("experience_nugget"), 1).withChance(0.75), Item.of(MC("cobblestone")).withChance(0.12)], MEK("fluorite_ore"))
+event.recipes.createCrushing([Item.of(MEK("fluorite_gem"), 6), Item.of(MEK("fluorite_gem"), 2).withChance(0.75), Item.of(CR("experience_nugget"), 1).withChance(0.75), Item.of(MC("cobbled_deepslate")).withChance(0.12)], MEK("deepslate_fluorite_ore"))
 
 //熔融铜矿石
 event.custom({
@@ -158,6 +116,195 @@ event.custom({
     }
   ]
 })
+
+recompact(TE("emerald_dust"), MC("emerald"))
+recompact(TE("lapis_dust"), MC("lapis_lazuli"))
+recompact(TE("sulfur_dust"), TE("sulfur"))
+recompact(TE("apatite_dust"), TE("apatite"))
+recompact(TE("niter_dust"), TE("niter"))
+recompact(TE("sapphire_dust"), TE("sapphire"))
+recompact(TE("ruby_dust"), TE("ruby"))
+recompact(FA("arcane_crystal_dust"), FA("arcane_crystal"))
+recompact(MEK("dust_fluorite"), MEK("fluorite_gem"))
+
+let stone = Item.of(MC("cobblestone"), 1).withChance(.5)
+let limestone = Item.of("darkerdepths:limestone", 1).withChance(.5)
+let aridrock = Item.of("darkerdepths:aridrock", 1).withChance(.5)
+let otherstone = Item.of(OC("otherstone"), 1).withChance(.5)
+
+event.recipes.createCrushing([Item.of("forbidden_arcanus:stellarite_piece", 1), Item.of("forbidden_arcanus:stellarite_piece", 1).withChance(.25), stone], "forbidden_arcanus:stella_arcanum")
+event.recipes.createCrushing([Item.of("forbidden_arcanus:xpetrified_orb", 2), Item.of("forbidden_arcanus:xpetrified_orb", 1).withChance(.25), stone], "forbidden_arcanus:xpetrified_ore")
+event.recipes.createCrushing([Item.of("buddycards:luminis_crystal", 2), Item.of("buddycards:luminis_crystal", 1).withChance(.25), stone], "buddycards:luminis_ore")
+event.recipes.createCrushing([Item.of("forbidden_arcanus:arcane_crystal", 2), Item.of("forbidden_arcanus:arcane_crystal_dust", 1).withChance(.25), stone], "forbidden_arcanus:arcane_crystal_ore")
+event.recipes.createCrushing([Item.of(OC("iesnium_dust"), 2), Item.of(OC("iesnium_dust"), 1).withChance(.25), otherstone], OC("iesnium_ore"))
+event.recipes.createCrushing([Item.of(TE("sapphire"), 2), Item.of(TE("sapphire"), 1).withChance(.25), stone], TE("sapphire_ore"))
+event.recipes.createCrushing([Item.of(TE("ruby"), 2), Item.of(TE("ruby"), 1).withChance(.25), stone], TE("ruby_ore"))
+event.recipes.createCrushing([Item.of(MC("diamond"), 2), Item.of(MC("diamond"), 1).withChance(.25), limestone], "darkerdepths:limestone_diamond_ore")
+event.recipes.createCrushing([Item.of(MC("diamond"), 2), Item.of(MC("diamond"), 1).withChance(.25), aridrock], "darkerdepths:aridrock_diamond_ore")
+event.recipes.createCrushing([Item.of(MC("coal"), 2), Item.of(MC("coal"), 2).withChance(.5), limestone], "darkerdepths:limestone_coal_ore")
+event.recipes.createCrushing([Item.of(MC("coal"), 2), Item.of(MC("coal"), 2).withChance(.5), aridrock], "darkerdepths:aridrock_coal_ore")
+event.recipes.createCrushing([Item.of(MC("lapis_lazuli"), 12), Item.of(MC("lapis_lazuli"), 8).withChance(.25), limestone], "darkerdepths:limestone_lapis_ore")
+event.recipes.createCrushing([Item.of(MC("lapis_lazuli"), 12), Item.of(MC("lapis_lazuli"), 8).withChance(.25), aridrock], "darkerdepths:aridrock_lapis_ore")
+event.recipes.createCrushing([Item.of(CR('crushed_raw_iron'), 1), limestone], "darkerdepths:limestone_iron_ore")
+event.recipes.createCrushing([Item.of(CR('crushed_raw_iron'), 1), aridrock], "darkerdepths:aridrock_iron_ore")
+event.recipes.createCrushing([Item.of(CR('crushed_raw_gold'), 1), limestone], "darkerdepths:limestone_gold_ore")
+event.recipes.createCrushing([Item.of(CR('crushed_raw_gold'), 1), aridrock], "darkerdepths:aridrock_gold_ore")
+//event.recipes.createCrushing([Item.of(TE('sulfur'), 1).withChance(.15)], "createindustry:sulfur")
+event.recipes.createCrushing([Item.of(TE('sulfur'), 1).withChance(.15)], "biomesoplenty:brimstone")
+
+//木炭粉
+event.recipes.immersiveengineeringCrusher("mekanism:dust_charcoal", "#forge:charcoal");
+event.recipes.immersiveengineeringCrusher("9x mekanism:dust_charcoal", "#forge:storage_blocks/charcoal");
+event.recipes.createMilling(["mekanism:dust_charcoal"], "#forge:charcoal");
+event.recipes.thermal.pulverizer("mekanism:dust_charcoal", "#forge:charcoal");
+//煤粉
+replaceIO("#forge:dusts/coal", "mekanism:dust_coal");
+event.recipes.createMilling(["mekanism:dust_coal"], "minecraft:coal");
+event.recipes.thermal.pulverizer("mekanism:dust_coal", "minecraft:coal");
+//硫磺粉
+replaceIO("#forge:dusts/sulfur", "thermal:sulfur_dust");
+event.recipes.immersiveengineeringCrusher("thermal:sulfur_dust", "#forge:gems/sulfur");
+event.recipes.createMilling(["thermal:sulfur_dust"], "#forge:gems/sulfur").processingTime(500);
+event.recipes.mekanismEnriching("thermal:sulfur_dust", "#forge:gems/sulfur");
+event.custom({
+  "type":"immersiveengineering:crusher",
+  "secondaries":[{"chance":0.15,
+  "output":{"item":"thermal:sulfur_dust"}}],
+  "result":{"count":4,
+  "base_ingredient":{"item":"minecraft:coal"}},
+  "input":{"tag":"forge:ores/coal"},
+  "energy":6000
+})
+//硝粉
+replaceIO("#forge:dusts/saltpeter", "thermal:niter_dust");
+event.recipes.immersiveengineeringCrusher("thermal:niter_dust", "#forge:gems/niter");
+event.recipes.createMilling(["thermal:niter_dust"], "#forge:gems/niter").processingTime(500);
+event.recipes.mekanismEnriching("thermal:niter_dust", "#forge:gems/niter");
+//磷灰石粉
+replaceIO("#forge:dusts/apatite", "thermal:apatite_dust");
+event.recipes.immersiveengineeringCrusher("thermal:apatite_dust", "#forge:gems/apatite");
+event.recipes.createMilling(["thermal:apatite_dust"], "#forge:gems/apatite").processingTime(500);
+event.recipes.mekanismEnriching("thermal:apatite_dust", "#forge:gems/apatite");
+//石英粉
+replaceIO("#forge:dusts/quartz", "thermal:quartz_dust");
+event.recipes.immersiveengineeringCrusher("thermal:quartz_dust", "#forge:gems/quartz");
+event.recipes.createMilling(["thermal:quartz_dust"], "#forge:gems/quartz").processingTime(500);
+event.recipes.mekanismEnriching("thermal:quartz_dust", "#forge:gems/quartz");
+//福禄伊克斯石英粉
+replaceIO("#forge:dusts/fluix", "ae2:fluix_dust");
+event.recipes.immersiveengineeringCrusher("ae2:fluix_dust", "#forge:gems/fluix");
+event.recipes.createMilling(["ae2:fluix_dust"], "#forge:gems/fluix").processingTime(500);
+event.recipes.mekanismEnriching("ae2:fluix_dust", "#forge:gems/fluix");
+//赛特斯石英粉
+replaceIO("#forge:dusts/certus_quartz", "ae2:certus_quartz_dust");
+event.recipes.immersiveengineeringCrusher("ae2:certus_quartz_dust", "#forge:gems/certus_quartz");
+event.recipes.createMilling(["ae2:certus_quartz_dust"], "#forge:gems/certus_quartz").processingTime(500);
+event.recipes.mekanismEnriching("ae2:certus_quartz_dust", "#forge:gems/certus_quartz");
+//黑曜石粉
+replaceIO("#forge:dusts/obsidian", "create:powdered_obsidian");
+event.recipes.immersiveengineeringCrusher("4x create:powdered_obsidian", "minecraft:obsidian");
+event.recipes.thermal.pulverizer("4x create:powdered_obsidian", "minecraft:obsidian");
+//氟石粉
+event.recipes.thermal.pulverizer("6x mekanism:fluorite_gem", "#forge:ores/fluorite");
+event.recipes.createMilling(["mekanism:dust_fluorite"], "#forge:gems/fluorite").processingTime(500);
+event.recipes.immersiveengineeringCrusher("mekanism:dust_fluorite", "#forge:gems/fluorite");
+event.recipes.thermal.pulverizer("mekanism:dust_fluorite", "#forge:gems/fluorite");
+//朱砂粉
+event.recipes.createMilling(['4x ' + MC('redstone')], TE('cinnabar')).processingTime(700)
+event.recipes.createCrushing(['6x ' + MC('redstone')], TE('cinnabar')).processingTime(500)
+event.recipes.thermal.pulverizer(['8x ' + MC('redstone')], TE('cinnabar')).energy(10000)
+event.recipes.mekanismEnriching('8x ' + MC('redstone'), TE('cinnabar'));
+//萤石粉
+event.recipes.createMilling(['3x ' + MC('glowstone_dust')], 'buddycards:luminis_crystal').processingTime(700)
+event.recipes.createCrushing(['6x ' + MC('glowstone_dust')], 'buddycards:luminis_crystal').processingTime(500)
+event.recipes.thermal.pulverizer(['9x ' + MC('glowstone_dust')], 'buddycards:luminis_crystal').energy(10000)
+event.recipes.mekanismEnriching('9x ' + MC('glowstone_dust'), 'buddycards:luminis_crystal');
+
+
+////replaceIOnput
+
+/*
+event.replaceInput(
+  "minecraft:lava_bucket",
+  Ingredient.of([Item.of("chickens:liquid_egg", '{id:"minecraft:lava"}'), "minecraft:lava_bucket"]).toJson()
+);
+event.replaceInput(
+  "minecraft:water_bucket",
+  Ingredient.of([Item.of("chickens:liquid_egg", '{id:"minecraft:water"}'), "minecraft:water_bucket"]).toJson()
+);
+*/
+
+event.replaceInput('createindustry:bauxite', 'immersiveengineering:raw_aluminum')
+event.replaceInput('forbidden_arcanus:arcane_crystal', '#forge:gems/arcane_crystal')
+event.replaceInput(MC("quartz"), AE2("#all_nether_quartz"))
+event.replaceInput(F("#gems/quartz"), AE2("#all_nether_quartz"))
+event.replaceInput(AE2("certus_quartz_crystal"), [AE2("certus_quartz_crystal"), KJ('purified_certus_quartz_crystal')])
+//event.replaceInput('pneumaticcraft:printed_circuit_board', 'mekanism:basic_control_circuit')
+//event.replaceInput('create_dd:chromatic_compound', 'create:chromatic_compound')
+//event.replaceInput('create_dd:refined_radiance', 'create:refined_radiance')
+//event.replaceInput('create_dd:shadow_steel', 'create:shadow_steel')
+
+replaceIO("#forge:silicon", "ae2:silicon");
+replaceIO("#forge:dusts/ender_pearl", "ae2:ender_dust");
+replaceIO("#forge:sawdust", "thermal:sawdust");
+replaceIO("#forge:slag", "thermal:slag");
+replaceIO("#forge:storage_blocks/charcoal", "mekanism:block_charcoal");
+replaceIO("#forge:coal_coke", "thermal:coal_coke");
+replaceIO("#forge:fuels/bio", "createaddition:biomass");
+replaceIO("alloyedguns:basic_bullet_casing", "immersiveengineering:empty_casing");
+replaceIO("pneumaticcraft:capacitor", "createaddition:capacitor");
+replaceIO("thermal:tea", "farmersrespite:green_tea_leaves");
+replaceIO("immersivepetroleum:bitumen", "thermal:bitumen");
+replaceIO("immersive_weathering:ash_layer_block", "#forge:dusts/ash");
+replaceIO("pneumaticcraft:printed_circuit_board", "mekanism:basic_control_circuit");
+replaceIO('create_dd:chromatic_compound', 'create:chromatic_compound')
+replaceIO('create_dd:refined_radiance', 'create:refined_radiance')
+replaceIO('create_dd:shadow_steel', 'create:shadow_steel')
+replaceIO('immersiveengineering:coal_coke', 'thermal:coal_coke')
+
+////原木处理
+
+let woodcutting = (mod, log, planks, slab, bark, sawdust) => {
+  event.remove({ id: "create:cutting/stripped_" + log })
+  event.remove({ id: "create:cutting/" + log })
+  event.remove({ id: "create:cutting/" + planks })
+  event.remove({ id: "create:cutting/" + slab })
+  event.recipes.createCutting([mod + ":stripped_" + log,  Item.of((bark))], mod + ":" + log).processingTime(50)
+	event.recipes.createCutting([Item.of(mod + ":" + planks, 6), Item.of((sawdust))], mod + ":stripped_" + log).processingTime(50)
+	event.recipes.createCutting([Item.of(mod + ":" + slab, 2), Item.of((sawdust)).withChance(0.75)], mod + ":" + planks).processingTime(50)
+}
+
+woodcutting("minecraft", "dark_oak_log", "dark_oak_planks", "dark_oak_slab", "immersive_weathering:dark_oak_bark", TE('sawdust'))
+woodcutting("minecraft", "oak_log", "oak_planks", "oak_slab", "immersive_weathering:oak_bark", TE('sawdust'))
+woodcutting("minecraft", "spruce_log", "spruce_planks", "spruce_slab", "immersive_weathering:spruce_bark", TE('sawdust'))
+woodcutting("minecraft", "birch_log", "birch_planks", "birch_slab", "immersive_weathering:birch_bark", TE('sawdust'))
+woodcutting("minecraft", "jungle_log", "jungle_planks", "jungle_slab", "immersive_weathering:jungle_bark", TE('sawdust'))
+woodcutting("minecraft", "acacia_log", "acacia_planks", "acacia_slab", "immersive_weathering:acacia_bark", TE('sawdust'))
+woodcutting("minecraft", "warped_stem", "warped_planks", "warped_slab", "immersive_weathering:warped_scales", TE("sawdust"))
+woodcutting("minecraft", "crimson_stem", "crimson_planks", "crimson_slab", "immersive_weathering:crimson_scales", TE("sawdust"))
+woodcutting("tconstruct", "greenheart_log", "greenheart_planks", "greenheart_planks_slab", 'immersive_weathering:tconstruct/greenheart_bark', 'minecraft:slime_ball')
+woodcutting("tconstruct", "skyroot_log", "skyroot_planks", "skyroot_planks_slab", 'immersive_weathering:tconstruct/skyroot_bark', 'tconstruct:sky_slime_ball')
+woodcutting("tconstruct", "bloodshroom_log", "bloodshroom_planks", "bloodshroom_planks_slab", 'immersive_weathering:tconstruct/bloodshroom_bark', 'tconstruct:ichor_slime_ball')
+woodcutting("forbidden_arcanus", "mysterywood_log", "mysterywood_planks", "mysterywood_slab", 'immersive_weathering:forbidden_arcanus/mysterywood_bark', 'kubejs:mysterywood_sawdust')
+woodcutting("forbidden_arcanus", "cherrywood_log", "cherrywood_planks", "cherrywood_slab", 'immersive_weathering:forbidden_arcanus/cherrywood_bark', TE("sawdust"))
+woodcutting("ars_nouveau", "blue_archwood_log", "archwood_planks", "archwood_slab", 'farmersdelight:tree_bark', TE("sawdust"))
+woodcutting("ars_nouveau", "purple_archwood_log", "archwood_planks", "archwood_slab", 'farmersdelight:tree_bark', TE("sawdust"))
+woodcutting("ars_nouveau", "green_archwood_log", "archwood_planks", "archwood_slab", 'farmersdelight:tree_bark', TE("sawdust"))
+woodcutting("ars_nouveau", "red_archwood_log", "archwood_planks", "archwood_slab", 'farmersdelight:tree_bark', TE("sawdust"))
+woodcutting("botania", "livingwood_log", "livingwood_planks", "livingwood_planks_slab", 'immersive_weathering:botania/livingwood_bark', TE("sawdust"))
+//woodcutting("enlightened_end", "congealed_stem", "congealed_planks", "congealed_slab", 'immersive_weathering:enlightened_end/congealed_bark', TE("sawdust"))
+//woodcutting("enlightened_end", "congealed_stem", "congealed_planks", "congealed_slab", 'immersive_weathering:enlightened_end/congealed_bark', TE("sawdust"))
+
+let wood_types = [
+  BOP('fir'), BOP('redwood'), BOP('cherry'), BOP('mahogany'), BOP('jacaranda'), BOP('palm'), BOP('willow'), BOP('dead'), BOP('magic'), BOP('umbran'), BOP('hellbark'), 
+  FA('edelwood'), FA('fungyss'), 
+  AP('twisted'), 
+  TF('twilight_oak'), TF('mangrove'), TF('dark'), TF('time'), TF('transformation'), TF('mining'), TF('sorting')]
+wood_types.forEach(wood => {
+  event.recipes.createCutting(['2x ' + wood + '_slab', Item.of(TE("sawdust")).withChance(0.75)], wood + '_planks').processingTime(50)})
+
+
+////矿词统一
 
 function unifyAllTheMetal(
     name,
@@ -250,150 +397,18 @@ function unifyAllTheMetal(
     Wire(obj, event);
     Rod(obj, event);
     Ingot(obj, event);
-  }
-
-  replaceIO("#forge:silicon", "ae2:silicon");
-  replaceIO("#forge:dusts/ender_pearl", "ae2:ender_dust");
-  replaceIO("#forge:sawdust", "thermal:sawdust");
-  replaceIO("#forge:slag", "thermal:slag");
-
-  replaceIO("#forge:storage_blocks/charcoal", "mekanism:block_charcoal");
-
-  replaceIO("#forge:coal_coke", "thermal:coal_coke");
-
-  replaceIO("#forge:fuels/bio", "createaddition:biomass");
-
-  replaceIO("alloyedguns:basic_bullet_casing", "immersiveengineering:empty_casing");
-
-  replaceIO("pneumaticcraft:capacitor", "createaddition:capacitor");
-
-  replaceIO("thermal:tea", "farmersrespite:green_tea_leaves");
-
-  replaceIO("immersivepetroleum:bitumen", "thermal:bitumen");
-
-  replaceIO("immersive_weathering:ash_layer_block", "#forge:dusts/ash");
-
-  let stone = Item.of(MC("cobblestone"), 1).withChance(.5)
-	let limestone = Item.of("darkerdepths:limestone", 1).withChance(.5)
-	let aridrock = Item.of("darkerdepths:aridrock", 1).withChance(.5)
-	let otherstone = Item.of(OC("otherstone"), 1).withChance(.5)
-
-	event.remove({ input: "darkerdepths:aridrock_gold_ore" })
-	event.remove({ input: "darkerdepths:aridrock_iron_ore" })
-	event.remove({ input: "darkerdepths:limestone_gold_ore" })
-	event.remove({ input: "darkerdepths:limestone_iron_ore" })
-
-  let recompact = (id, id2) => {
-    event.recipes.createCompacting(id2, [id])
-  }
-  
-  recompact(TE("emerald_dust"), MC("emerald"))
-  recompact(TE("lapis_dust"), MC("lapis_lazuli"))
-  recompact(TE("sulfur_dust"), TE("sulfur"))
-  recompact(TE("apatite_dust"), TE("apatite"))
-  recompact(TE("niter_dust"), TE("niter"))
-  recompact(TE("sapphire_dust"), TE("sapphire"))
-  recompact(TE("ruby_dust"), TE("ruby"))
-  recompact("forbidden_arcanus:arcane_crystal_dust", "forbidden_arcanus:arcane_crystal")
-
-	event.recipes.createCrushing([Item.of("forbidden_arcanus:stellarite_piece", 1), Item.of("forbidden_arcanus:stellarite_piece", 1).withChance(.25), stone], "forbidden_arcanus:stella_arcanum")
-	event.recipes.createCrushing([Item.of("forbidden_arcanus:xpetrified_orb", 2), Item.of("forbidden_arcanus:xpetrified_orb", 1).withChance(.25), stone], "forbidden_arcanus:xpetrified_ore")
-	event.recipes.createCrushing([Item.of("buddycards:luminis_crystal", 2), Item.of("buddycards:luminis_crystal", 1).withChance(.25), stone], "buddycards:luminis_ore")
-	event.recipes.createCrushing([Item.of("forbidden_arcanus:arcane_crystal", 2), Item.of("forbidden_arcanus:arcane_crystal_dust", 1).withChance(.25), stone], "forbidden_arcanus:arcane_crystal_ore")
-	event.recipes.createCrushing([Item.of(OC("iesnium_dust"), 2), Item.of(OC("iesnium_dust"), 1).withChance(.25), otherstone], OC("iesnium_ore"))
-	event.recipes.createCrushing([Item.of(TE("sapphire"), 2), Item.of(TE("sapphire"), 1).withChance(.25), stone], TE("sapphire_ore"))
-	event.recipes.createCrushing([Item.of(TE("ruby"), 2), Item.of(TE("ruby"), 1).withChance(.25), stone], TE("ruby_ore"))
-	event.recipes.createCrushing([Item.of(MC("diamond"), 2), Item.of(MC("diamond"), 1).withChance(.25), limestone], "darkerdepths:limestone_diamond_ore")
-	event.recipes.createCrushing([Item.of(MC("diamond"), 2), Item.of(MC("diamond"), 1).withChance(.25), aridrock], "darkerdepths:aridrock_diamond_ore")
-	event.recipes.createCrushing([Item.of(MC("coal"), 2), Item.of(MC("coal"), 2).withChance(.5), limestone], "darkerdepths:limestone_coal_ore")
-	event.recipes.createCrushing([Item.of(MC("coal"), 2), Item.of(MC("coal"), 2).withChance(.5), aridrock], "darkerdepths:aridrock_coal_ore")
-	event.recipes.createCrushing([Item.of(MC("lapis_lazuli"), 12), Item.of(MC("lapis_lazuli"), 8).withChance(.25), limestone], "darkerdepths:limestone_lapis_ore")
-	event.recipes.createCrushing([Item.of(MC("lapis_lazuli"), 12), Item.of(MC("lapis_lazuli"), 8).withChance(.25), aridrock], "darkerdepths:aridrock_lapis_ore")
-	event.recipes.createCrushing([Item.of(CR('crushed_raw_iron'), 1), limestone], "darkerdepths:limestone_iron_ore")
-	event.recipes.createCrushing([Item.of(CR('crushed_raw_iron'), 1), aridrock], "darkerdepths:aridrock_iron_ore")
-	event.recipes.createCrushing([Item.of(CR('crushed_raw_gold'), 1), limestone], "darkerdepths:limestone_gold_ore")
-	event.recipes.createCrushing([Item.of(CR('crushed_raw_gold'), 1), aridrock], "darkerdepths:aridrock_gold_ore")
-
-  event.recipes.immersiveengineeringCrusher("mekanism:dust_charcoal", "#forge:charcoal");
-  event.recipes.immersiveengineeringCrusher("9x mekanism:dust_charcoal", "#forge:storage_blocks/charcoal");
-  event.recipes.createMilling(["mekanism:dust_charcoal"], "#forge:charcoal");
-  event.recipes.thermal.pulverizer("mekanism:dust_charcoal", "#forge:charcoal");
-
-  replaceIO("#forge:dusts/coal", "mekanism:dust_coal");
-  event.recipes.createMilling(["mekanism:dust_coal"], "minecraft:coal");
-  event.recipes.thermal.pulverizer("mekanism:dust_coal", "minecraft:coal");
-
-  replaceIO("#forge:dusts/sulfur", "thermal:sulfur_dust");
-  event.recipes.immersiveengineeringCrusher("thermal:sulfur_dust", "#forge:gems/sulfur");
-  event.recipes.createMilling(["thermal:sulfur_dust"], "#forge:gems/sulfur").processingTime(500);
-  event.recipes.mekanismEnriching("thermal:sulfur_dust", "#forge:gems/sulfur");
-  event.custom({"type":"immersiveengineering:crusher",
-  "secondaries":[{"chance":0.15,
-  "output":{"item":"thermal:sulfur_dust"}}],
-  "result":{"count":4,
-  "base_ingredient":{"item":"minecraft:coal"}},
-  "input":{"tag":"forge:ores/coal"},
-  "energy":6000
-  })
-
-  replaceIO("#forge:dusts/niter", "thermal:niter_dust");
-  event.recipes.immersiveengineeringCrusher("thermal:niter_dust", "#forge:gems/niter");
-  event.recipes.createMilling(["thermal:niter_dust"], "#forge:gems/niter").processingTime(500);
-  event.recipes.mekanismEnriching("thermal:niter_dust", "#forge:gems/niter");
-
-  replaceIO("#forge:dusts/apatite", "thermal:apatite_dust");
-  event.recipes.immersiveengineeringCrusher("thermal:apatite_dust", "#forge:gems/apatite");
-  event.recipes.createMilling(["thermal:apatite_dust"], "#forge:gems/apatite").processingTime(500);
-  event.recipes.mekanismEnriching("thermal:apatite_dust", "#forge:gems/apatite");
-
-  replaceIO("#forge:dusts/quartz", "thermal:quartz_dust");
-  event.recipes.immersiveengineeringCrusher("thermal:quartz_dust", "#forge:gems/quartz");
-  event.recipes.createMilling(["thermal:quartz_dust"], "#forge:gems/quartz").processingTime(500);
-  event.recipes.mekanismEnriching("thermal:quartz_dust", "#forge:gems/quartz");
-
-  replaceIO("#forge:dusts/fluix", "ae2:fluix_dust");
-  event.recipes.immersiveengineeringCrusher("ae2:fluix_dust", "#forge:gems/fluix");
-  event.recipes.createMilling(["ae2:fluix_dust"], "#forge:gems/fluix").processingTime(500);
-  event.recipes.mekanismEnriching("ae2:fluix_dust", "#forge:gems/fluix");
-
-  replaceIO("#forge:dusts/certus_quartz", "ae2:certus_quartz_dust");
-  event.recipes.immersiveengineeringCrusher("ae2:certus_quartz_dust", "#forge:gems/certus_quartz");
-  event.recipes.createMilling(["ae2:certus_quartz_dust"], "#forge:gems/certus_quartz").processingTime(500);
-  event.recipes.mekanismEnriching("ae2:certus_quartz_dust", "#forge:gems/certus_quartz");
-
-  replaceIO("#forge:dusts/obsidian", "create:powdered_obsidian");
-  event.recipes.immersiveengineeringCrusher("4x create:powdered_obsidian", "minecraft:obsidian");
-  event.recipes.thermal.pulverizer("4x create:powdered_obsidian", "minecraft:obsidian");
-
-  event.replaceInput(MC("quartz"), AE2("#all_nether_quartz"))
-  event.replaceInput(F("#gems/quartz"), AE2("#all_nether_quartz"))
-  event.replaceInput(AE2("certus_quartz_crystal"), [AE2("certus_quartz_crystal"), KJ('purified_certus_quartz_crystal')])
-
-  event.recipes.thermal.pulverizer("6x mekanism:fluorite_gem", "#forge:ores/fluorite");
-  event.recipes.createMilling(["mekanism:dust_fluorite"], "#forge:gems/fluorite").processingTime(500);
-  event.recipes.immersiveengineeringCrusher("mekanism:dust_fluorite", "#forge:gems/fluorite");
-  event.recipes.thermal.pulverizer("mekanism:dust_fluorite", "#forge:gems/fluorite");
-
-  event.recipes.createMilling(['4x ' + MC('redstone')], TE('cinnabar')).processingTime(700)
-	event.recipes.createCrushing(['6x ' + MC('redstone')], TE('cinnabar')).processingTime(500)
-	event.recipes.thermal.pulverizer(['8x ' + MC('redstone')], TE('cinnabar')).energy(10000)
-  event.recipes.mekanismEnriching('8x ' + MC('redstone'), TE('cinnabar'));
-
-	event.recipes.createMilling(['3x ' + MC('glowstone_dust')], 'buddycards:luminis_crystal').processingTime(700)
-	event.recipes.createCrushing(['6x ' + MC('glowstone_dust')], 'buddycards:luminis_crystal').processingTime(500)
-	event.recipes.thermal.pulverizer(['9x ' + MC('glowstone_dust')], 'buddycards:luminis_crystal').energy(10000)
-  event.recipes.mekanismEnriching('9x ' + MC('glowstone_dust'), 'buddycards:luminis_crystal');
+};
 
   unifyAllTheMetal(
     "aluminum",
-    "alltheores:aluminum_ore",
-    "alltheores:aluminum_slate_ore",
-    "alltheores:aluminum_nether_ore",
-    "alltheores:aluminum_end_ore",
+    "",
+    "immersiveengineering:deepslate_ore_aluminum",
+    "immersiveengineering:ore_aluminum",
+    "",
     "immersiveengineering:raw_aluminum",
-    "alltheores:raw_aluminum_block",
-    "createindustry:aluminum_block",
-    "createindustry:aluminum_ingot",
+    "immersiveengineering:raw_block_aluminum",
+    "immersiveengineering:storage_aluminum",
+    "immersiveengineering:ingot_aluminum",
     "immersiveengineering:nugget_aluminum",
     "",
     "immersiveengineering:dust_aluminum",
@@ -746,12 +761,12 @@ function unifyAllTheMetal(
 
   unifyAllTheMetal(
     "lead",
-    "alltheores:lead_ore",
-    "alltheores:lead_slate_ore",
-    "alltheores:lead_nether_ore",
-    "alltheores:lead_end_ore",
+    "thermal:lead_ore",
+    "thermal:deepslate_lead_ore",
+    "",
+    "",
     "thermal:raw_lead",
-    "alltheores:raw_lead_block",
+    "thermal:raw_lead_block",
     "thermal:lead_block",
     "thermal:lead_ingot",
     "thermal:lead_nugget",
@@ -842,12 +857,12 @@ function unifyAllTheMetal(
 
   unifyAllTheMetal(
     "nickel",
-    "alltheores:nickel_ore",
-    "alltheores:nickel_slate_ore",
-    "alltheores:nickel_nether_ore",
-    "alltheores:nickel_end_ore",
+    "thermal:nickel_ore",
+    "thermal:deepslate_lead_ore",
+    "",
+    "",
     "thermal:raw_nickel",
-    "alltheores:raw_nickel_block",
+    "thermal:raw_nickel_block",
     "thermal:nickel_block",
     "thermal:nickel_ingot",
     "thermal:nickel_nugget",
@@ -866,12 +881,12 @@ function unifyAllTheMetal(
 
   unifyAllTheMetal(
     "osmium",
-    "alltheores:osmium_ore",
-    "alltheores:osmium_slate_ore",
-    "alltheores:osmium_nether_ore",
-    "alltheores:osmium_end_ore",
+    "",
+    "mekanism:deepslate_osmium_ore",
+    "",
+    "mekanism:osmium_ore",
     "mekanism:raw_osmium",
-    "alltheores:raw_osmium_block",
+    "mekanism:block_raw_osmium",
     "mekanism:block_osmium",
     "mekanism:ingot_osmium",
     "mekanism:nugget_osmium",
@@ -962,12 +977,12 @@ function unifyAllTheMetal(
 
   unifyAllTheMetal(
     "silver",
-    "alltheores:silver_ore",
-    "alltheores:silver_slate_ore",
-    "alltheores:silver_nether_ore",
-    "alltheores:silver_end_ore",
+    "",
+    "thermal:deepslate_silver_ore",
+    "",
+    "thermal:silver_ore",
     "thermal:raw_silver",
-    "alltheores:raw_silver_block",
+    "thermal:raw_silver_block",
     "thermal:silver_block",
     "thermal:silver_ingot",
     "thermal:silver_nugget",
@@ -1000,7 +1015,7 @@ function unifyAllTheMetal(
     "tconstruct:molten_steel",
     "thermal:steel_gear",
     "create_dd:steel_sheet",
-    "createindustry:rebar",
+    "immersiveengineering:stick_steel",
     "",
     "",
     "",
@@ -1010,12 +1025,12 @@ function unifyAllTheMetal(
 
   unifyAllTheMetal(
     "tin",
-    "alltheores:tin_ore",
-    "alltheores:tin_slate_ore",
-    "alltheores:tin_nether_ore",
-    "alltheores:tin_end_ore",
+    "thermal:tin_ore",
+    "thermal:deepslate_tin_ore",
+    "",
+    "",
     "thermal:raw_tin",
-    "alltheores:raw_tin_block",
+    "thermal:raw_tin_block",
     "thermal:tin_block",
     "thermal:tin_ingot",
     "thermal:tin_nugget",
@@ -1034,12 +1049,12 @@ function unifyAllTheMetal(
 
   unifyAllTheMetal(
     "uranium",
-    "alltheores:uranium_ore",
-    "alltheores:uranium_slate_ore",
-    "alltheores:uranium_nether_ore",
-    "alltheores:uranium_end_ore",
-    "immersiveengineering:raw_uranium",
-    "alltheores:raw_uranium_block",
+    "",
+    "mekanism:deepslate_uranium_ore",
+    "",
+    "mekanism:uranium_ore",
+    "mekanism:raw_uranium",
+    "mekanism:block_raw_uranium",
     "immersiveengineering:storage_uranium",
     "immersiveengineering:ingot_uranium",
     "immersiveengineering:nugget_uranium",
@@ -1060,8 +1075,8 @@ function unifyAllTheMetal(
     "zinc",
     "create:zinc_ore",
     "create:deepslate_zinc_ore",
-    "alltheores:zinc_nether_ore",
-    "alltheores:zinc_end_ore",
+    "",
+    "",
     "create:raw_zinc",
     "create:raw_zinc_block",
     "create:zinc_block",
@@ -1134,7 +1149,7 @@ function unifyAllTheMetal(
     "",
     "",
     "",
-    "kubejs:raw_mana_steel",
+    "",
     "",
     "botania:manasteel_block",
     "botania:manasteel_ingot",
@@ -1145,7 +1160,7 @@ function unifyAllTheMetal(
     "",
     "",
     "",
-    "kubejs:crushed_raw_mana_steel",
+    "",
     "",
     "",
     "",
@@ -1190,7 +1205,7 @@ function unifyAllTheMetal(
     "",
     "",
     "materialis:molten_arcane_gold",
-    "",
+    "kubejs:arcane_gold_gear",
     "kubejs:arcane_golden_sheet",
     "",
     "",
@@ -1239,7 +1254,7 @@ function unifyAllTheMetal(
     "",
     "materialis:molten_refined_radiance",
     "",
-    "kubejs:radiant_sheet",
+    "create_dd:refined_radiance_sheet",
     "kubejs:radiant_rod",
     "",
     "",
@@ -1271,5 +1286,118 @@ function unifyAllTheMetal(
     "",
     ""
   );
+
+  unifyAllTheMetal(
+    "desh",
+    "",
+    "",
+    "",
+    "",
+    "beyond_earth:raw_desh",
+    "beyond_earth:raw_desh_block",
+    "beyond_earth:desh_block",
+    "beyond_earth:desh_ingot",
+    "beyond_earth:desh_nugget",
+    "",
+    "kubejs:desh_dust",
+    "beyond_earth:molten_desh",
+    "",
+    "beyond_earth:desh_plate",
+    "",
+    "kubejs:crushed_desh_ore",
+    "",
+    "",
+    "",
+    ""
+  );
+
+  unifyAllTheMetal(
+    "ostrum",
+    "",
+    "",
+    "",
+    "",
+    "beyond_earth:raw_ostrum",
+    "beyond_earth:raw_ostrum_block",
+    "beyond_earth:ostrum_block",
+    "beyond_earth:ostrum_ingot",
+    "beyond_earth:ostrum_nugget",
+    "",
+    "kubejs:ostrum_dust",
+    "beyond_earth:molten_ostrum",
+    "",
+    "",
+    "",
+    "kubejs:crushed_ostrum_ore",
+    "",
+    "",
+    "",
+    ""
+  );
+
+  unifyAllTheMetal(
+    "calorite",
+    "",
+    "",
+    "",
+    "",
+    "beyond_earth:raw_calorite",
+    "beyond_earth:raw_calorite_block",
+    "beyond_earth:calorite_block",
+    "beyond_earth:calorite_ingot",
+    "beyond_earth:calorite_nugget",
+    "",
+    "kubejs:calorite_dust",
+    "beyond_earth:molten_calorite",
+    "",
+    "",
+    "",
+    "kubejs:crushed_calorite_ore",
+    "",
+    "",
+    "",
+    ""
+  );
+
+  unifyAllTheMetal(
+    "", //名称
+    "", //矿石
+    "", //深层矿石
+    "", //下界矿石
+    "", //末地矿石
+    "", //粗矿
+    "", //粗矿块
+    "", //块
+    "", //锭
+    "", //粒
+    "", //宝石
+    "", //粉
+    "", //熔融流体
+    "", //齿轮
+    "", //板材
+    "", //棍
+    "", //粉碎矿
+    "", //脏矿粉
+    "", //线
+    "", //副产物
+    ""  //熔融流体副产物
+  );
+  
+
+});
+
+onEvent('item.tags', event => {
+
+event.get('forge:dusts/saltpeter')
+.add('thermal:niter_dust')
+.add('createbigcannons:nitropowder')
+.add('bloodmagic:saltpeter')
+.add('immersiveengineering:dust_saltpeter')
+
+event.get('createbigcannons:nitropowder')
+.add('#forge:dusts/saltpeter')
+
+event.get('forge:dusts/niter')
+.add('#forge:dusts/saltpeter')
 
 });

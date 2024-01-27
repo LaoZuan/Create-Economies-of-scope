@@ -1,8 +1,0 @@
-{
-  "type": "botania:state_copying_pure_daisy",
-  "input": {
-    "type": "block",
-    "block": "ars_nouveau:purple_archwood_log"
-  },
-  "output": "occultism:otherworld_log"
-}

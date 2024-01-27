@@ -1,0 +1,23 @@
+{
+    "oreConfig": [
+      {
+        "ore": "immersiveengineering:ore_aluminum",
+        "fillers": [
+          "minecraft:netherrack"
+        ],
+        "distribution": "UNIFORM",
+        "minY": 0,
+        "maxY": 128,
+        "maxVeinSize": 7,
+        "spawnRate": 6.0,
+        "discardChanceOnAirExposure": 1.0,
+        "biomeFilters": {
+          "biomeBlacklist": [],
+          "biomeWhitelist": [
+            "NETHER"
+          ]
+        },
+        "replace": true
+      }
+    ]
+  }

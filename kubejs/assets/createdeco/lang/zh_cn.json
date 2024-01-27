@@ -1,0 +1,16 @@
+{
+  "block.createdeco.brass_coinstack_block": "铂金币块",
+  "block.createdeco.copper_coinstack_block": "铜币块",
+  "block.createdeco.gold_coinstack_block": "金币块",
+  "block.createdeco.netherite_coinstack_block": "下界合金币块",
+  "block.createdeco.zinc_coinstack_block": "银币块",
+  "block.createdeco.iron_coinstack_block": "§dCreate币块",
+
+
+  "item.createdeco.brass_coinstack": "§b铂金币堆",
+  "item.createdeco.copper_coinstack": "§4铜币堆",
+  "item.createdeco.gold_coinstack": "§6金币堆",
+  "item.createdeco.netherite_coinstack": "§8下界合金币堆",
+  "item.createdeco.zinc_coinstack": "§7银币堆",
+  "item.createdeco.iron_coinstack": "§dCreate币堆"
+}

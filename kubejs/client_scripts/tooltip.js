@@ -41,13 +41,17 @@ pen_regis('kubejs:pen_regis_14', "4号", "动力构件")
 
 //第一章
 main_assembly('kubejs:kinetic_mechanism', "1")
+main_assembly('create_dd:inductive_mechanism', "1")
 bonus_assembly('kubejs:sealed_mechanism', "1A")
-bonus_assembly('create_dd:inductive_mechanism', "1A")
-bonus_assembly('kubejs:gold_source_mechanism', "1A")
+
+main_assembly('kubejs:gold_source_mechanism', "1M")
 //第二章
 main_assembly('create:precision_mechanism', "2")
-bonus_assembly('kubejs:infernal_mechanism', "2A")
-bonus_assembly('projectred_core:motor', "2A")    
+bonus_assembly('kubejs:infernal_mechanism', "2A") 
+bonus_assembly('kubejs:sturdy_mechanism', "2A") 
+bonus_assembly('projectred_core:motor', "2A")   
+
+bonus_assembly('kubejs:metamorphic_mechanism', "2M")
 //第三章
 main_assembly('kubejs:inductive_mechanism', "3")
 bonus_assembly('kubejs:abstruse_mechanism', "3A")

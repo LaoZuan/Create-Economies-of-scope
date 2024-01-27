@@ -5,7 +5,7 @@
     "gripType": "cgm:one_handed",
     "maxAmmo": 24,
     "reloadAmount": 1,
-    "recoilAngle": 4.0,
+    "recoilAngle": 1.0,
     "recoilKick": 0.25,
     "recoilAdsReduction": 0.3,
     "projectileAmount": 3,
@@ -13,7 +13,7 @@
     "spread": 10.0
   },
   "projectile": {
-    "item": "createindustry:screw",
+    "item": "minecraft:flint",
     "damage": 4.5,
     "size": 2.0,
     "speed": 3.0,

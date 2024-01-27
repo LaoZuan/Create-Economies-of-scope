@@ -1,10 +1,4 @@
 onEvent('item.tags', event => {
-	// Get the #forge:cobblestone tag collection and add Diamond Ore to it
-	// event.get('forge:cobblestone').add('minecraft:diamond_ore')
-
-	// Get the #forge:cobblestone tag collection and remove Mossy Cobblestone from it
-	// event.get('forge:cobblestone').remove('minecraft:mossy_cobblestone')
-
 global.trades.forEach(element => {
 		event.get('forge:trade_cards').add(`kubejs:trade_card_${element}`)
 	});
@@ -21,21 +15,29 @@ event.get('minecraft:wooden_slabs')
 .add('kubejs:pen_regis_1M3A')
 .add('kubejs:pen_regis_1M4A')
 
-
+//罐中物品
+event.get('supplementaries:cookies')
+.add('create_confectionery:full_chocolate_bar')
+.add('create_confectionery:full_black_chocolate_bar')
+.add('create_confectionery:full_white_chocolate_bar')
+.add('create_confectionery:full_ruby_chocolate_bar')
+.add('botania:mana_cookie')
+.add('cookielicious:vanilla_cookie')
+.add('cookielicious:chocolate_cookie')
+.add('cookielicious:strawberry_cookie')
+.add('cookielicious:banana_cookie')
+.add('cookielicious:mint_cookie')
+.add('cookielicious:adzuki_cookie')
+.add('endersdelight:uncanny_cookies')
+.add('farmersdelight:sweet_berry_cookie')
+.add('farmersdelight:honey_cookie')
+.add('twilightdelight:torchberry_cookie')
+//.add('botania:gaia_head')
 
 //为高贵的石磨献上手磨的美
 event.get('forge:tools/knives').add('create:millstone')
 
 event.get('kubejs:certus_quartz_crystal').add('ae2:certus_quartz_crystal')
-
-event.get('kubejs:creosote').add('kubejs:creosote_ball')
-
-event.get('kubejs:handmade').add('kubejs:handmade_kinetic_mechanism')
-event.get('kubejs:handmade').add('kubejs:handmade_sealed_mechanism')
-event.get('kubejs:handmade').add('kubejs:handmade_precision_mechanism')
-event.get('kubejs:handmade').add('kubejs:handmade_inductive_mechanism')
-event.get('kubejs:handmade').add('kubejs:handmade_infernal_mechanism')
-event.get('kubejs:handmade').add('kubejs:handmade_abstruse_mechanism')
 
 event.get('ae2:quantum_entangled_singularity').add('ae2:quantum_entangled_singularity')
 
@@ -78,7 +80,7 @@ event.get('forge:wires/nickel').add('kubejs:nickel_wire')
 
 event.get('forge:rods/refined_radiance').add('kubejs:radiant_rod')
 //event.get('forge:wires/refined_radiance').add('kubejs:radiant_wire')
-event.get('forge:plates/refined_radiance').add('kubejs:radiant_sheet')
+//event.get('forge:plates/refined_radiance').add('kubejs:radiant_sheet')
 event.get('forge:rods/shadow_steel').add('kubejs:shadow_steel_rod')
 
 event.get('forge:plates/compressed_iron').add('kubejs:iron_compressed_sheet')
@@ -95,29 +97,17 @@ event.get('ae2:all_nether_quartz').add('kubejs:purified_nether_quartz_crystal')
 event.get('forge:gems/quartz').add('kubejs:purified_nether_quartz_crystal')
 event.get('forge:gems/certus_quartz').add('kubejs:purified_certus_quartz_crystal')
 
+/*
 event.get('forge:raw_ores/tungsten').add('stalwart_dungeons:raw_tungsten')
 event.get('forge:raw_materials/tungsten').add('stalwart_dungeons:raw_tungsten')
 event.get('forge:ingots/tungsten').add('stalwart_dungeons:tungsten_ingot')
+*/
 
 event.get('forge:ingots/black_chocolate').add('create_confectionery:bar_of_black_chocolate')
 event.get('forge:ingots/white_chocolate').add('create_confectionery:bar_of_white_chocolate')
 
 event.get('forge:ingots/platinum').add('buddycards:buddysteel_ingot')
 event.get('forge:nuggets/platinum').add('buddycards:buddysteel_nugget')
-
-event.get('cb_microblock:tools/saw').add('kubejs:netherite_saw')
-event.get('forge:saws').add('#cb_microblock:tools/saw')
-
-event.get('forge:screwdrivers').add(PR_C('screwdriver'))
-event.get('forge:chromatic_resonators').add(KJ('chromatic_resonator'))
-event.get('forge:boot_mediums').add(KJ('boot_medium'))
-event.get('forge:calculators').add(KJ('calculator'))
-event.get('forge:thermal_greases').add(KJ('thermal_grease'))
-event.get('forge:hop_slimes').add(KJ('hop_slime'))
-event.get('forge:water_insulation').add('createindustry:water_insulation')
-event.get('forge:metamorphic_lich_rods').add(KJ('metamorphic_lich_rod'))
-event.get('forge:prospector_tool').add('createindustry:prospector_tool')
-event.get('forge:sewing_spool').add(KJ('sewing_spool'))
 
 event.get('forge:circuit_press').add('ae2:calculation_processor_press')
 event.get('forge:circuit_press').add('ae2:engineering_processor_press')
@@ -128,7 +118,7 @@ event.get('thermal:crafting/dies').add('kubejs:calculator')
 
 event.get('forge:plates/arcane_gold').add('kubejs:arcane_golden_sheet')
 
-event.get('forge:rods/steel').add('createindustry:rebar')
+//event.get('forge:rods/steel').add('createindustry:rebar')
 
 event.get('immersive_weathering:bark').add('farmersdelight:tree_bark')
 
@@ -171,13 +161,15 @@ event.get('kubejs:oil_crops').add('#farmersrespite:tea_leaves')
 event.get('kubejs:oil_crops').add('biomesoplenty:palm_sapling')
 event.get('kubejs:oil_crops').add('biomesoplenty:palm_sapling')
 
-event.get('thermal:glass/hardened').add('mekanismgenerators:reactor_glass')
+event.get('createbigcannons:sheet_steel').add('create_dd:steel_sheet')
 
 event.get('forge:ingots/cast_iron').add('#forge:ingots/industrial_iron')
 event.get('forge:plates/cast_iron').add('#forge:plates/industrial_iron')
 event.get('forge:nuggets/cast_iron').add('#forge:nuggets/industrial_iron')
 event.get('forge:storage_blocks/industrial_iron').add('create:industrial_iron_block')
 event.get('forge:storage_blocks/cast_iron').add('#forge:storage_blocks/industrial_iron')
+
+event.get('forge:ingots/cast_iron').add('#forge:ingots/industrial_iron')
 
 event.get('forge:dusts/ash').add('immersive_weathering:ash_layer_block')
 event.get('forge:dusts/ash').add('darkerdepths:ash')
@@ -191,10 +183,10 @@ event.removeAllTagsFrom('immersiveengineering:ore_uranium')
 event.removeAllTagsFrom('immersiveengineering:deepslate_ore_uranium')
 event.removeAllTagsFrom('immersiveengineering:raw_block_uranium')
 
-event.get('forge:gears').add('kubejs:andesite_alloy_gear')
-
+/*
 event.get('forge:raw_materials/manasteel').add('kubejs:raw_mana_steel')
 event.get('create:crushed_raw_materials').add('kubejs:crushed_raw_mana_steel')
+*/
 
 event.get('immersive_weathering:wax').add('immersivepetroleum:paraffin_wax')
 
@@ -206,6 +198,10 @@ event.get('#forge:cans_sealed').add('kubjs:can_sealed')
 })
 
 onEvent('fluid.tags', event => {
+
+event.get('forge:blood').add('tconstruct:blood')
+event.get('forge:blood').add('biomesoplenty:blood')
+
 /*
 event.get('forge:kerosene').add('createindustry:kerosene')
 event.get('forge:diesel').add('createindustry:diesel')
@@ -215,9 +211,12 @@ event.get('forge:crude_oil').add('createindustry:crude_oil_fluid')
 })
 
 onEvent('fluid.tags', event => {
-event.get('minecraft:water').remove('nethers_exoticism:jaboticaba_juice')
+
+//event.get('minecraft:water').remove('nethers_exoticism:jaboticaba_juice')
 event.get('minecraft:water').remove('create:honey')
 event.get('minecraft:water').remove('create:chocolate')
+event.get('minecraft:water').remove('create_enchantment_industry:ink')
+event.get('minecraft:water').remove('create_enchantment_industry:flowing_ink')
 /*
 event.get('minecraft:water').remove('creatania:molten_gold')
 event.get('minecraft:water').remove('creatania:molten_iron')
@@ -255,6 +254,7 @@ event.get('minecraft:water').remove('create_confectionery:white_chocolate')
 event.get('minecraft:water').remove('create_confectionery:hot_chocolate')
 event.get('minecraft:water').remove('create_confectionery:caramel')
 event.get('minecraft:water').remove('create_confectionery:ruby_chocolate')
+/*
 event.get('minecraft:water').remove('createindustry:crude_oil_fluid')
 event.get('minecraft:water').remove('createindustry:kerosene')
 event.get('minecraft:water').remove('createindustry:napalm')
@@ -263,24 +263,12 @@ event.get('minecraft:water').remove('createindustry:gasoline')
 event.get('minecraft:water').remove('createindustry:naphta')
 event.get('minecraft:water').remove('createindustry:heavy_oil')
 event.get('minecraft:water').remove('createindustry:lubrication_oil')
-event.get('minecraft:water').remove('enlightened_end:ooze_fluid')
-event.get('minecraft:water').remove('create_dd:condense_milk')
-event.get('minecraft:water').remove('create_dd:condense_milk')
-event.get('minecraft:water').remove('create_dd:vanilla')
-event.get('minecraft:water').remove('create_dd:vanilla_milkshake')
-event.get('minecraft:water').remove('create_dd:strawberry')
-event.get('minecraft:water').remove('create_dd:strawberry_milkshake')
-event.get('minecraft:water').remove('create_dd:glowberry')
-event.get('minecraft:water').remove('create_dd:glowberry_milkshake')
-event.get('minecraft:water').remove('create_dd:caramel')
-event.get('minecraft:water').remove('create_dd:caramel_milkshake')
-event.get('minecraft:water').remove('create_dd:cream')
-event.get('minecraft:water').remove('create_dd:hot_chocolate')
-event.get('minecraft:water').remove('create_dd:chocolate_milkshake')
+*/
+//event.get('minecraft:water').remove('enlightened_end:ooze_fluid')
 event.get('minecraft:water').remove('beyond_earth:fuel')
 event.get('minecraft:water').remove('beyond_earth:oil')
 event.get('minecraft:water').remove('createaddition:bioethanol')
-event.get('minecraft:water').remove('nethers_exoticism:flowing_jaboticaba_juice')
+//event.get('minecraft:water').remove('nethers_exoticism:flowing_jaboticaba_juice')
 event.get('minecraft:water').remove('create:flowing_honey')
 event.get('minecraft:water').remove('create:flowing_chocolate')
 event.get('minecraft:water').remove('createaddition:flowing_seed_oil')
@@ -292,6 +280,7 @@ event.get('minecraft:water').remove('create_confectionery:flowing_white_chocolat
 event.get('minecraft:water').remove('create_confectionery:flowing_hot_chocolate')
 event.get('minecraft:water').remove('create_confectionery:flowing_caramel')
 event.get('minecraft:water').remove('create_confectionery:flowing_ruby_chocolate')
+/*
 event.get('minecraft:water').remove('createindustry:crude_oil_flowing')
 event.get('minecraft:water').remove('createindustry:flowing_kerosene')
 event.get('minecraft:water').remove('createindustry:flowing_napalm')
@@ -300,7 +289,8 @@ event.get('minecraft:water').remove('createindustry:flowing_gasoline')
 event.get('minecraft:water').remove('createindustry:flowing_naphta')
 event.get('minecraft:water').remove('createindustry:flowing_heavy_oil')
 event.get('minecraft:water').remove('createindustry:flowing_lubrication_oil')
-event.get('minecraft:water').remove('enlightened_end:flowing_ooze_fluid')
+*/
+//event.get('minecraft:water').remove('enlightened_end:flowing_ooze_fluid')
 event.get('minecraft:water').remove('create_dd:flowing_condense_milk')
 event.get('minecraft:water').remove('create_dd:flowing_condense_milk')
 event.get('minecraft:water').remove('create_dd:flowing_vanilla')
@@ -314,7 +304,32 @@ event.get('minecraft:water').remove('create_dd:flowing_caramel_milkshake')
 event.get('minecraft:water').remove('create_dd:flowing_cream')
 event.get('minecraft:water').remove('create_dd:flowing_hot_chocolate')
 event.get('minecraft:water').remove('create_dd:flowing_chocolate_milkshake')
+event.get('minecraft:water').remove('create_dd:condense_milk')
+event.get('minecraft:water').remove('create_dd:condense_milk')
+event.get('minecraft:water').remove('create_dd:vanilla')
+event.get('minecraft:water').remove('create_dd:vanilla_milkshake')
+event.get('minecraft:water').remove('create_dd:strawberry')
+event.get('minecraft:water').remove('create_dd:strawberry_milkshake')
+event.get('minecraft:water').remove('create_dd:glowberry')
+event.get('minecraft:water').remove('create_dd:glowberry_milkshake')
+event.get('minecraft:water').remove('create_dd:caramel')
+event.get('minecraft:water').remove('create_dd:caramel_milkshake')
+event.get('minecraft:water').remove('create_dd:cream')
+event.get('minecraft:water').remove('create_dd:hot_chocolate')
+event.get('minecraft:water').remove('create_dd:chocolate_milkshake')
+event.get('minecraft:water').remove('create_dd:sap')
+event.get('minecraft:water').remove('create_dd:shimmer')
+event.get('minecraft:water').remove('create_dd:chromatic_waste')
+event.get('minecraft:water').remove('create_dd:flowing_sap')
+event.get('minecraft:water').remove('create_dd:flowing_shimmer')
+event.get('minecraft:water').remove('create_dd:flowing_chromatic_waste')
 event.get('minecraft:water').remove('beyond_earth:flowing_fuel')
 event.get('minecraft:water').remove('beyond_earth:flowing_oil')
 event.get('minecraft:water').remove('createaddition:flowing_bioethanol')
+/*
+event.get('minecraft:water').remove('garnished:garnish')
+event.get('minecraft:water').remove('garnished:apple_cider')
+event.get('minecraft:water').remove('garnished:peanut_oil')
+event.get('minecraft:water').remove('garnished:cashew_mixture')
+*/
 })

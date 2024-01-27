@@ -1,0 +1,23 @@
+{
+    "oreConfig": [
+      {
+        "ore": "mekanism:uranium_ore",
+        "fillers": [
+          "minecraft:end_stone"
+        ],
+        "distribution": "UNIFORM",
+        "minY": -64,
+        "maxY": 64,
+        "maxVeinSize": 7,
+        "spawnRate": 1.5,
+        "discardChanceOnAirExposure": 1.0,
+        "biomeFilters": {
+          "biomeBlacklist": [],
+          "biomeWhitelist": [
+            "END"
+          ]
+        },
+        "replace": true
+      }
+    ]
+  }

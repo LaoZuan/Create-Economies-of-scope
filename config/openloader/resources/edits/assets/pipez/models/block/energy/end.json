@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "pipez:block/pipe_rims",
-		"1": "pipez:block/pipe_end",
-		"2": "pipez:block/pipe_rims_inner",
-		"particle": "pipez:block/pipe_rims"
+		"0": "pipez:block/energy/pipe_rims",
+		"1": "pipez:block/energy/pipe_end",
+		"2": "pipez:block/energy/pipe_rims_inner",
+		"particle": "pipez:block/energy/pipe_rims"
 	},
 	"elements": [
 		{

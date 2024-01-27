@@ -29,7 +29,7 @@ function prettierpipes(event) {
 		event.shaped("8x pipez:gas_pipe", [
 			'PMP'
 		], {
-			P: 'alloyed:steel_ingot',
+			P: 'create_dd:steel_ingot',
 			M: 'mekanism:ingot_osmium'
 		})
 	
